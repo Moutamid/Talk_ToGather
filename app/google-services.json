@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "892992147501",
+    "firebase_url": "https://talktogatherapp-default-rtdb.firebaseio.com",
+    "project_id": "talktogatherapp",
+    "storage_bucket": "talktogatherapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:892992147501:android:255ca9228c75650c90a8a4",
+        "android_client_info": {
+          "package_name": "com.moutamid.talk_togather"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "892992147501-lh597abnf13qojopg4a7f643detiafps.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.moutamid.talk_togather",
+            "certificate_hash": "309bc07aea5fffbbbf69c8b8435d380078ec8eba"
+          }
+        },
+        {
+          "client_id": "892992147501-vae03vf01ksd62tbbf12mdludvmvblch.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCC0dgKmrHCRVmRMCApmKXof0UpnZA65ww"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "892992147501-vae03vf01ksd62tbbf12mdludvmvblch.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

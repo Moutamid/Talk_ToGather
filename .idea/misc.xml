@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/drawable/shape_circle.xml" value="0.1565" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_catagory_details.xml" value="0.12092391304347826" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_conversation.xml" value="0.12092391304347826" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_dash_board.xml" value="0.12092391304347826" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_see_all_category_list.xml" value="0.12273550724637682" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_start_room.xml" value="0.12092391304347826" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/row_coversation.xml" value="0.12273550724637682" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/row_detail.xml" value="0.2662013958125623" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/row_selected_catagories.xml" value="0.12273550724637682" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/row_upcoming.xml" value="0.12092391304347826" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    tools:context=".Initial_Activities.Splash">
+
+    <!--<ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/splash_circle_black" />-->
+
+    <!--<ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="150dp"
+        android:src="@drawable/splash_circle_right" />-->
+
+   <!-- <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/splash_circle_bottom" />-->
+
+   <!-- <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_splash"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="70dp"
+        android:src="@drawable/splash_mini_vlack_circle" />-->
+
+    <ImageView
+        android:id="@+id/splash_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="5dp"
+        android:src="@drawable/logo_splash" />
+
+    <TextView
+        android:id="@+id/text_splash"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/splash_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
+        android:text="@string/splash_welcome_txt"
+        android:textColor="#808080"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/text_splash2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:textSize="15dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/splash_welcome_content"
+        android:textColor="#808080"
+        android:layout_marginRight="60dp"
+        android:layout_marginLeft="60dp"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/text_splash2"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/eureka_logo_splash" />
+
+</RelativeLayout>
