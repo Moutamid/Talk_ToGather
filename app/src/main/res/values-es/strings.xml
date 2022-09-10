@@ -5,6 +5,8 @@
 
     <string name="hello_blank_fragment">Hola fragmento en blanco</string>
     <string name="private_app_id">dc2cac0b37ae4ecf8d4a80e45845cc56</string>
+    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="admob_banner_id">ca-app-pub-3940256099942544/6300978111</string>
 
     <string name="category_screen_title">ESTAS SON NUESTRAS CATEGORIAS FAVORITAS</string>
 
@@ -25,11 +27,10 @@
     <string name="category_beauty">Belleza</string>
     <string name="category_culture">Cultura</string>
     <string name="category_lifestyle">Estilo de vida</string>
-    <string name="category_freelance">trabajo independiente</string>
     <string name="category_gaming">Juego de azar</string>
     <string name="category_travel">Viaje y Turismo</string>
     <string name="category_social">Redes sociales</string>
-    <string name="message_hint">Su mensaje aquí !</string>
+    <string name="message_hint">Su mensaje aquí </string>
     <string name="leave_btn">Abandonar</string>
     <string name="dashboard_title">Reuniones</string>
     <string name="upcoming_title">próximos</string>
@@ -40,17 +41,17 @@
     <string name="gathering">reunión</string>
     <string name="edit_profile_title">Editar perfil</string>
     <string name="fname_txt">Primer nombre</string>
-    <string name="fname_hint">¡Ingrese el nombre aquí!</string>
+    <string name="fname_hint">¡Ingrese el nombre aquí</string>
     <string name="lname_txt">Apellido</string>
-    <string name="lname_hint">¡Ingrese el apellido aquí!</string>
+    <string name="lname_hint">¡Ingrese el apellido aquí</string>
     <string name="email_txt">Correo electrónico</string>
-    <string name="email_hint">¡Ingrese el correo electrónico aquí!</string>
+    <string name="email_hint">¡Ingrese el correo electrónico aquí</string>
     <string name="phone_txt">Número de teléfono</string>
     <string name="phone_hint">Introducir teléfono</string>
     <string name="pass_txt">Clave</string>
-    <string name="pass_hint">Ingrese la contraseña aquí !</string>
+    <string name="pass_hint">Ingrese la contraseña aquí </string>
     <string name="cpass_txt">Confirmar contraseña</string>
-    <string name="cpass_hint">¡Ingrese a Confirmar contraseña aquí!</string>
+    <string name="cpass_hint">¡Ingrese a Confirmar contraseña aquí</string>
     <string name="bio_txt">biografía</string>
     <string name="bio_hint">biografía</string>
     <string name="local_time_txt">HORA LOCAL</string>
@@ -70,7 +71,7 @@
     <string name="code_description">Hemos enviado el código de verificación a su número de móvil</string>
     <string name="submit_btn">Enviar</string>
     <string name="resend_txt">REENVIAR</string>
-    <string name="login_welcome_txt">¡Bienvenido de nuevo!</string>
+    <string name="login_welcome_txt">¡Bienvenido de nuevo</string>
     <string name="login_welcome_desp">Ingrese sus credenciales para continuar</string>
     <string name="remember_txt">Recuerdame la proxima vez</string>
     <string name="login_btn">Acceso</string>
@@ -86,8 +87,8 @@
 
     <string name="message_txt">Mensajes</string>
     <string name="block_txt">Bloquear</string>
-    <string name="block_report_txt">Bloquear y Reportar</string>
-
+   <!-- <string name="block_report_txt">Bloquear y Reportar</string>-->
+    <string name="select_chat">Select Chat</string>
     <string name="create_room_txt">Crear una nueva habitación</string>
     <string name="title_txt">Título</string>
     <string name="title_hint">Ingrese el título</string>
@@ -104,10 +105,10 @@
     <string name="walk_pickup_content">Seleccione una reunión de su elección y únase a conversaciones creativas</string>
 
     <string name="walk_pickup_txt2">Conéctate con Mentes Afines</string>
-    <string name="walk_pickup_content2">¡Únase o cree una reunión libre de drama, inspiradora, estimulante y creativa!</string>
+    <string name="walk_pickup_content2">¡Únase o cree una reunión libre de drama, inspiradora, estimulante y creativa</string>
 
-    <string name="walk_pickup_txt3">¡TÚ seas el cambio!</string>
-    <string name="walk_pickup_content3">¡Cree un perfil de usuario que se destaque!</string>
+    <string name="walk_pickup_txt3">¡TÚ seas el cambio</string>
+    <string name="walk_pickup_content3">¡Cree un perfil de usuario que se destaque</string>
 
     <string name="settings_txt">Ajustes</string>
     <string name="pause_notification_txt">Pausar notificaciones</string>
@@ -128,7 +129,7 @@
     <string name="logout_txt">Cerrar sesión</string>
     <string name="version_txt">Versión 1.0</string>
 
-    <string name="profile_screen_txt">¡Perfecto!</string>
+    <string name="profile_screen_txt">¡Perfecto</string>
     <string name="profile_screen_content">Sube una foto de tu mejor yo</string>
     <string name="next_btn">próximo</string>
 

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,6 +27,7 @@ import java.util.Locale;
 public class Welcome_Screen extends AppCompatActivity {
 
     Button signUp_btn;
+    private TextView loginTxt;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
     private SharedPreferencesManager prefs;
@@ -55,15 +57,29 @@ public class Welcome_Screen extends AppCompatActivity {
         }
         getLocale();
         signUp_btn = findViewById(R.id.signUp_btn);
+        loginTxt = findViewById(R.id.login);
         signUp_btn.setAlpha(0f);
         signUp_btn.animate().alpha(1f).setDuration(3000);
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
+        loginTxt.setAlpha(0f);
+        loginTxt.animate().alpha(1f).setDuration(3000);
         signUp_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 signUp_btn.startAnimation(animation);
                 Intent intent = new Intent(Welcome_Screen.this , OTP_Number_Activity.class);
+                intent.putExtra("login",false);
+                startActivity(intent);
+                finish();
+                Animatoo.animateFade(Welcome_Screen.this);
+            }
+        });
+        loginTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Welcome_Screen.this , OTP_Number_Activity.class);
+                intent.putExtra("login",true);
                 startActivity(intent);
                 finish();
                 Animatoo.animateFade(Welcome_Screen.this);

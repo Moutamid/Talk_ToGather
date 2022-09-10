@@ -16,6 +16,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -35,6 +38,7 @@ public class OTP_Number_Activity extends AppCompatActivity {
     private CountryCodePicker ccp;
     private SharedPreferencesManager prefs;
     private boolean theme;
+    private boolean accountType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,7 @@ public class OTP_Number_Activity extends AppCompatActivity {
         prefs = new SharedPreferencesManager(this);
         theme = prefs.retrieveBoolean("theme",false);//get stored theme, zero is default
         setContentView(R.layout.activity_otp_number);
+        accountType = getIntent().getBooleanExtra("login",false);
         final Animation animation = AnimationUtils.loadAnimation(this, R.anim.bounce);
 
         if (theme){
@@ -95,13 +100,13 @@ public class OTP_Number_Activity extends AppCompatActivity {
                 if (snapshot.exists()){
                     Intent intent = new Intent(OTP_Number_Activity.this , OTP_Verification_Activity.class);
                     intent.putExtra("phone",number);
-                    intent.putExtra("login",true);
+                    intent.putExtra("login",accountType);
                     startActivity(intent);
                     Animatoo.animateFade(OTP_Number_Activity.this);
                 }else {
                     Intent intent = new Intent(OTP_Number_Activity.this , OTP_Verification_Activity.class);
                     intent.putExtra("phone",number);
-                    intent.putExtra("login",false);
+                    intent.putExtra("login",accountType);
                     startActivity(intent);
                     Animatoo.animateFade(OTP_Number_Activity.this);
                 }

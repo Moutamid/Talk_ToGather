@@ -3,6 +3,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="private_app_id">dc2cac0b37ae4ecf8d4a80e45845cc56</string>
+    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="admob_banner_id">ca-app-pub-3940256099942544/6300978111</string>
 
     <string name="category_screen_title">THESE ARE OUR FAVOURITE CATEGORIES</string>
 
@@ -23,32 +25,31 @@
     <string name="category_beauty">Beauty</string>
     <string name="category_culture">Culture</string>
     <string name="category_lifestyle">Lifestyle</string>
-    <string name="category_freelance">Freelencing</string>
     <string name="category_gaming">Gaming</string>
     <string name="category_travel">Travel And Tourism</string>
     <string name="category_social">Social Media</string>
-    <string name="message_hint">Your Message Here !</string>
+    <string name="message_hint">Your Message Here</string>
     <string name="leave_btn">Leave</string>
     <string name="dashboard_title">Gatherings</string>
     <string name="upcoming_title">Upcoming</string>
     <string name="live_title">Live Gatherings</string>
-    <string name="category_title">Catagories</string>
+    <string name="category_title">Categories</string>
     <string name="see_all_title">See All</string>
     <string name="start_room_title">Start A room</string>
     <string name="gathering">gathering</string>
     <string name="edit_profile_title">Edit Profile</string>
     <string name="fname_txt">First Name</string>
-    <string name="fname_hint">Enter First Name Here !</string>
+    <string name="fname_hint">Enter First Name Here</string>
     <string name="lname_txt">Last Name</string>
-    <string name="lname_hint">Enter Last Name Here !</string>
+    <string name="lname_hint">Enter Last Name Here</string>
     <string name="email_txt">Email</string>
-    <string name="email_hint">Enter Email Here !</string>
+    <string name="email_hint">Enter Email Here</string>
     <string name="phone_txt">Phone Number</string>
-    <string name="phone_hint">Enter Phone # Here !</string>
+    <string name="phone_hint">Enter Phone # Here</string>
     <string name="pass_txt">Password</string>
-    <string name="pass_hint">Enter Password Here !</string>
+    <string name="pass_hint">Enter Password Here</string>
     <string name="cpass_txt">Confirm Password</string>
-    <string name="cpass_hint">Enter Confirm Password Here !</string>
+    <string name="cpass_hint">Enter Confirm Password Here</string>
     <string name="bio_txt">Bio</string>
     <string name="bio_hint">Bio</string>
     <string name="local_time_txt">LOCAL TIME</string>
@@ -68,7 +69,7 @@
     <string name="code_description">We have sent the verification code to Your Mobile Number</string>
     <string name="submit_btn">Submit</string>
     <string name="resend_txt">RESEND</string>
-    <string name="login_welcome_txt">Welcome Back!</string>
+    <string name="login_welcome_txt">Welcome Back</string>
     <string name="login_welcome_desp">Enter your credentials to continue</string>
     <string name="remember_txt">Remember me Next Time</string>
     <string name="login_btn">Login</string>
@@ -84,8 +85,8 @@
 
     <string name="message_txt">Messages</string>
     <string name="block_txt">Block</string>
-    <string name="block_report_txt">Block and Report</string>
-
+   <!-- <string name="block_report_txt">Block and Report</string>-->
+    <string name="select_chat">Select Chat</string>
     <string name="create_room_txt">Create a new room</string>
     <string name="title_txt">Title</string>
     <string name="title_hint">Enter Title</string>
@@ -102,10 +103,10 @@
     <string name="walk_pickup_content">Select a gathering of your choice and join in creative conversations</string>
 
     <string name="walk_pickup_txt2">Connect with Like Minds</string>
-    <string name="walk_pickup_content2">Join or create a gathering that is drama-free, inspirational, thought-provoking, and creative!</string>
+    <string name="walk_pickup_content2">Join or create a gathering that is drama-free, inspirational, thought-provoking, and creative</string>
 
-    <string name="walk_pickup_txt3">YOU be the change!</string>
-    <string name="walk_pickup_content3">Create a user profile that stands out!</string>
+    <string name="walk_pickup_txt3">YOU be the change</string>
+    <string name="walk_pickup_content3">Create a user profile that stands out</string>
 
     <string name="settings_txt">Settings</string>
     <string name="pause_notification_txt">Pause Notifications</string>
@@ -126,9 +127,11 @@
     <string name="logout_txt">Logout</string>
     <string name="version_txt">Version 1.0</string>
 
-    <string name="profile_screen_txt">Perfect!</string>
+    <string name="profile_screen_txt">Perfect</string>
     <string name="profile_screen_content">Upload a photo of your best self</string>
     <string name="next_btn">Next</string>
+    <string name="title_activity_search">SearchActivity</string>
+
 
 
 </resources>

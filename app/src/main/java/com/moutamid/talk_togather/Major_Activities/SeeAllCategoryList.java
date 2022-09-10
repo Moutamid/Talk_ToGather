@@ -1,18 +1,24 @@
 package com.moutamid.talk_togather.Major_Activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.icu.text.SimpleDateFormat;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,7 +34,9 @@ import com.moutamid.talk_togather.SharedPreferencesManager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class SeeAllCategoryList extends AppCompatActivity {
 
@@ -94,13 +102,17 @@ public class SeeAllCategoryList extends AppCompatActivity {
     private void loadLiveData() {
         Query query = roomDB.orderByChild("live").equalTo(true);
         query.addValueEventListener(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
                     detailArrayList.clear();
                     for (DataSnapshot ds : snapshot.getChildren()){
                         RoomDetails model = ds.getValue(RoomDetails.class);
-                        detailArrayList.add(model);
+                        long time = getHour(model.getTimestamp());
+                        if(time <= 2){
+                            detailArrayList.add(model);
+                        }
                     }
                     adapter_detail = new Adapter_Detail(SeeAllCategoryList.this, detailArrayList);
                     detail_recycler.setAdapter(adapter_detail);
@@ -117,6 +129,7 @@ public class SeeAllCategoryList extends AppCompatActivity {
         });
     }
 
+
     private void loadUpcomingData() {
         detailArrayList.clear();
         Calendar calendar = Calendar.getInstance();
@@ -129,8 +142,9 @@ public class SeeAllCategoryList extends AppCompatActivity {
             int dd = calendar.get(Calendar.DAY_OF_MONTH);
             String date = dd+"/"+mm+"/"+yy;
 
-            Query query = roomDB.orderByChild("timestamp").equalTo(0);
+            Query query = roomDB.orderByChild("live").equalTo(false);
             query.addValueEventListener(new ValueEventListener() {
+                @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if(snapshot.exists()){
@@ -138,6 +152,7 @@ public class SeeAllCategoryList extends AppCompatActivity {
                         for (DataSnapshot ds : snapshot.getChildren()){
                             RoomDetails model = ds.getValue(RoomDetails.class);
                             if (model.getDate().equals(date)) {
+                              //  long time = getHour(model.getTimestamp());
                                 detailArrayList.add(model);
                             }
                         }
@@ -159,6 +174,28 @@ public class SeeAllCategoryList extends AppCompatActivity {
 
     }
 
+    long daysDiff;
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public long getHour(long time) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+            //Date dateBefore = sdf.parse("04/21/2022");
+            //  Date dateAfter = sdf.parse("04/25/2022");
+            Calendar calendar1 = Calendar.getInstance();
+            calendar1.setTimeInMillis(time);
+            Calendar calendar2 = Calendar.getInstance();
+            String date = sdf.format(calendar1.getTime());
+            String date1 = sdf.format(calendar2.getTime());
+            Date dateBefore = sdf.parse(date);
+            Date dateAfter = sdf.parse(date1);
+            long timeDiff = Math.abs(dateAfter.getTime() - dateBefore.getTime());
+            daysDiff = TimeUnit.DAYS.convert(timeDiff, TimeUnit.MILLISECONDS);
+            System.out.println("The number of days between dates: " + daysDiff);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return daysDiff;
+    }
     private void getLocale() {
 
         String lang = prefs.retrieveString("lang", "");

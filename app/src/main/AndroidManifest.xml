@@ -23,6 +23,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Talk_ToGather">
         <activity
+            android:name=".Major_Activities.FAQSActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Major_Activities.SearchActivity"
+            android:exported="false"
+            android:label="@string/title_activity_search" />
+        <activity
             android:name=".Major_Activities.SeeAllCategoryList"
             android:exported="false" />
         <activity
@@ -91,7 +98,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:theme="@android:style/Theme.Translucent" />
 
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/admob_app_id" />
         <service
             android:name=".Notifications.MyFirebaseMessaging"
             android:directBootAware="true"

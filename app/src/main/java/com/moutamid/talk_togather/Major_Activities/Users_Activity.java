@@ -14,6 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -27,10 +30,12 @@ import com.moutamid.talk_togather.Adapters.SelectedChatListAdapter;
 import com.moutamid.talk_togather.Models.Conversation;
 import com.moutamid.talk_togather.R;
 import com.moutamid.talk_togather.SharedPreferencesManager;
+import com.moutamid.talk_togather.listener.ItemCheckboxClickListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -41,16 +46,19 @@ public class Users_Activity extends AppCompatActivity {
     ImageView menu;
     CardView user_menu_card;
     ImageView user_menu_card_close;
-    TextView blockBtn,blockReportBtn;
+    TextView blockBtn,selectBtn;
 
     private RecyclerView user_recycler,selected_user_recycler;
     private List<Conversation> conversationList = new ArrayList<>();
     private ChatListAdapter mAdapter;
     DatabaseReference mConversationReference;
     private FirebaseAuth mAuth;
+    private SelectedChatListAdapter adapter;
     private FirebaseUser user;
     private SharedPreferencesManager prefs;
     private boolean theme;
+    int pos = 0;
+    private String uid = "";
 
 
     @Override
@@ -76,7 +84,7 @@ public class Users_Activity extends AppCompatActivity {
         close = findViewById(R.id.close_user);
         delete = findViewById(R.id.delete_user);
         blockBtn = findViewById(R.id.block);
-        blockReportBtn = findViewById(R.id.report);
+        selectBtn = findViewById(R.id.select);
         menu = findViewById(R.id.menu_user);
         user_menu_card = findViewById(R.id.card_menu);
         user_menu_card_close = findViewById(R.id.menu_user_close);
@@ -115,7 +123,8 @@ public class Users_Activity extends AppCompatActivity {
         });
         user_recycler = findViewById(R.id.recyclerView_user);
         selected_user_recycler = findViewById(R.id.recyclerView_selected_user);
-        blockBtn.setOnClickListener(new View.OnClickListener() {
+
+        selectBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 user_recycler.setVisibility(View.GONE);
@@ -123,23 +132,43 @@ public class Users_Activity extends AppCompatActivity {
                 user_menu_card.setVisibility(View.GONE);
                 menu.setVisibility(View.VISIBLE);
                 user_menu_card_close.setVisibility(View.GONE);
-                getSelectionChatList("block");
+                getSelectionChatList();
+            }
+        });
 
+        blockBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                blockUser(uid);
+
+                user_recycler.setVisibility(View.VISIBLE);
+                selected_user_recycler.setVisibility(View.GONE);
+                user_menu_card.setVisibility(View.GONE);
+                menu.setVisibility(View.VISIBLE);
+                user_menu_card_close.setVisibility(View.GONE);
             }
         });
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                user_recycler.setVisibility(View.GONE);
+             /*   user_recycler.setVisibility(View.GONE);
                 selected_user_recycler.setVisibility(View.VISIBLE);
-                getSelectionChatList("delete");
+                getSelectionChatList("delete");*/
+                deleteChat(uid,pos);
+
+                user_recycler.setVisibility(View.VISIBLE);
+                selected_user_recycler.setVisibility(View.GONE);
+                user_menu_card.setVisibility(View.GONE);
+                menu.setVisibility(View.VISIBLE);
+                user_menu_card_close.setVisibility(View.GONE);
             }
         });
         getGeneralChatList();
     }
-    private void getSelectionChatList(String type) {
+
+    private void getSelectionChatList() {
         Query myQuery = mConversationReference.orderByChild("timestamp");
-        myQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+        myQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -155,7 +184,22 @@ public class Users_Activity extends AppCompatActivity {
                             return Long.compare(t1.getTimestamp(),conversation.getTimestamp());
                         }
                     });
-                    SelectedChatListAdapter adapter = new SelectedChatListAdapter(Users_Activity.this, conversationList,type);
+                    adapter = new SelectedChatListAdapter(Users_Activity.this,
+                            conversationList);
+                    adapter.setItemCheckboxClickListener(new ItemCheckboxClickListener() {
+                        @Override
+                        public void onItemClick(int position, boolean b) {
+                            if (b){
+                                delete.setClickable(true);
+                                blockBtn.setEnabled(true);
+                            }else {
+                                delete.setClickable(false);
+                                blockBtn.setEnabled(false);
+                            }
+                            pos = position;
+                            uid = conversationList.get(position).getChatWithId();
+                        }
+                    });
                     selected_user_recycler.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 }
@@ -168,6 +212,29 @@ public class Users_Activity extends AppCompatActivity {
         });
 
     }
+
+    private void deleteChat(String id, int position) {
+        FirebaseUser mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference conversationReference = FirebaseDatabase.getInstance().getReference()
+                .child("conversation").child(mFirebaseUser.getUid()).child(id);
+        conversationReference.removeValue();
+        conversationList.remove(position);
+        adapter.notifyItemRemoved(position);
+        adapter.notifyItemRangeRemoved(position,conversationList.size());
+    }
+
+    private void blockUser(String userId){
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Blocked Users")
+                .child(user.getUid()).child(userId);
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("id", userId);
+        reference.updateChildren(hashMap);
+    }
+
 
     private void getLocale(){
 

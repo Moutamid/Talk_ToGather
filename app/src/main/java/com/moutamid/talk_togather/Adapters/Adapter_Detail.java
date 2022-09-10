@@ -2,13 +2,18 @@ package com.moutamid.talk_togather.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
+import android.os.Build;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,9 +33,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
-public class Adapter_Detail extends RecyclerView.Adapter<Adapter_Detail.HolderAndroid> {
+public class Adapter_Detail extends RecyclerView.Adapter<Adapter_Detail.HolderAndroid> implements Filterable {
 
     private Context context;
     private ArrayList<RoomDetails> androidArrayList;
@@ -55,16 +63,17 @@ public class Adapter_Detail extends RecyclerView.Adapter<Adapter_Detail.HolderAn
         String decription_tv = modelAndroid.getDescription();
         String heading_tv = modelAndroid.getTitle();
         String timer_tv = "";
-        if (modelAndroid.getTimestamp() == 0){
+       /* if (modelAndroid.getTimestamp() == 0){
              timer_tv = modelAndroid.getDate();
         }else {
             Calendar cal = Calendar.getInstance(Locale.ENGLISH);
             cal.setTimeInMillis(modelAndroid.getTimestamp());
             timer_tv = DateFormat.format("dd/M/yyyy", cal).toString();
-        }
+        }*/
+        getDaysHours(modelAndroid.getTimestamp(),holder.timer);
         holder.des.setText(decription_tv);
         holder.heading.setText(heading_tv);
-        holder.timer.setText(timer_tv);
+       // holder.timer.setText(timer_tv);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         DatabaseReference roomDB = FirebaseDatabase.getInstance().getReference().child("Rooms");
@@ -302,10 +311,78 @@ public class Adapter_Detail extends RecyclerView.Adapter<Adapter_Detail.HolderAn
 
     }
 
+    private void getDaysHours(long timestamp, TextView timer) {
+        try {
+            SimpleDateFormat sdf = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+
+                //Date dateBefore = sdf.parse("04/21/2022");
+                //  Date dateAfter = sdf.parse("04/25/2022");
+                Calendar calendar1 = Calendar.getInstance();
+                calendar1.setTimeInMillis(timestamp);
+                Calendar calendar2 = Calendar.getInstance();
+                String date = sdf.format(calendar1.getTime());
+                String date1 = sdf.format(calendar2.getTime());
+                Date dateBefore = sdf.parse(date);
+                Date dateAfter = sdf.parse(date1);
+                long timeDiff = Math.abs(dateAfter.getTime() - dateBefore.getTime());
+                long daysDiff = TimeUnit.DAYS.convert(timeDiff, TimeUnit.MILLISECONDS);
+                long hours = TimeUnit.DAYS.toHours(daysDiff);
+                long min = TimeUnit.HOURS.toMinutes(hours);
+                if (daysDiff == 0) {
+                    timer.setText("Today");
+                } else {
+                    timer.setText(daysDiff + " day ");
+                }
+                System.out.println("The number of days between dates: " + daysDiff);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
     @Override
     public int getItemCount() {
         return androidArrayList.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    Filter filter = new Filter() {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            List<RoomDetails> filterList = new ArrayList<>();
+
+            if (charSequence.toString().isEmpty()) {
+                filterList.addAll(androidArrayList);
+            } else {
+                for (RoomDetails data : androidArrayList) {
+                    if (data.getTitle().toLowerCase().contains(charSequence.toString().toLowerCase())) {
+                        filterList.add(data);
+                    }
+                }
+            }
+
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filterList;
+
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+
+        }
+    };
+
+
+
 
     class HolderAndroid extends RecyclerView.ViewHolder {
 

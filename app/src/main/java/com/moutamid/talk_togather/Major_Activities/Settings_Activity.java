@@ -17,6 +17,9 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.moutamid.talk_togather.Initial_Activities.Welcome_Screen;
 import com.moutamid.talk_togather.R;
@@ -109,45 +112,19 @@ public class Settings_Activity extends AppCompatActivity {
         languageTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-             /*   listItems = new String[]{
-                        "English", "French", "Spanish"};
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(Settings_Activity.this);
-                mBuilder.setTitle("Choose an item");
-                mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        languageTxt.setText(listItems[i]);
-                        if (i==0){
-                            setLocale("en");
-                            recreate();
-                        }
-                        else if (i == 1){
-                            setLocale("fr");
-                            recreate();
-                        }else if (i == 2){
-                            setLocale("es");
-                            recreate();
-                        }
-
-                        dialogInterface.dismiss();
-                    }
-                });
-                // Set the neutral/cancel button click listener
-                mBuilder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Do something when click the neutral button
-                        dialog.cancel();
-                    }
-                });
-
-                AlertDialog mDialog = mBuilder.create();
-                mDialog.show();*/
                 showLanguageDialogBox();
             }
         });
 
-
+        faqsTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Settings_Activity.this , FAQSActivity.class);
+                startActivity(intent);
+                Animatoo.animateSlideDown(Settings_Activity.this);
+                finish();
+            }
+        });
         pause_notification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {

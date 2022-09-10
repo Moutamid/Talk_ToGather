@@ -1,7 +1,9 @@
 package com.moutamid.talk_togather.Adapters;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
@@ -17,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,10 +32,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.moutamid.talk_togather.Major_Activities.Chat_Activity;
+import com.moutamid.talk_togather.Major_Activities.Users_Activity;
 import com.moutamid.talk_togather.Models.Chat;
 import com.moutamid.talk_togather.Models.Conversation;
 import com.moutamid.talk_togather.Models.User;
 import com.moutamid.talk_togather.R;
+import com.moutamid.talk_togather.listener.ItemCheckboxClickListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
@@ -46,12 +52,13 @@ public class SelectedChatListAdapter extends RecyclerView.Adapter<SelectedChatLi
     private List<Conversation> conversationList;
     private DatabaseReference mUserReference;
     private Context mContext;
-    private String type;
+    private ItemCheckboxClickListener itemCheckboxClickListener;
+//    private String type;
 
-    public SelectedChatListAdapter(Context context, List<Conversation> conversations, String type) {
+    public SelectedChatListAdapter(Context context, List<Conversation> conversations) {
         this.mContext = context;
         this.conversationList = conversations;
-        this.type = type;
+     //   this.type = type;
     }
 
     @NonNull
@@ -72,7 +79,7 @@ public class SelectedChatListAdapter extends RecyclerView.Adapter<SelectedChatLi
             String id = conversation.getChatWithId();
             Log.i("listadapter", "id: " + id);
 
-            holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+          /*  holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     if (b){
@@ -85,7 +92,7 @@ public class SelectedChatListAdapter extends RecyclerView.Adapter<SelectedChatLi
 
                     }
                 }
-            });
+            });*/
 
         Query query = mUserReference.orderByChild("id").equalTo(id);
 
@@ -108,14 +115,32 @@ public class SelectedChatListAdapter extends RecyclerView.Adapter<SelectedChatLi
                        holder.itemView.setOnClickListener(new View.OnClickListener() {
                            @Override
                            public void onClick(View view) {
-                               Conversation conversation = conversationList.get(position);
-                               clearUnreadChat(conversation.getChatWithId());
-                               Intent intent = new Intent(mContext, Chat_Activity.class);
-                               // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                               intent.putExtra(Chat_Activity.EXTRAS_USER, user);
-                               intent.putExtra("userUid", conversation.getChatWithId());
-                               mContext.startActivity(intent);
 
+                               FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                               FirebaseUser user = mAuth.getCurrentUser();
+                               DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Blocked Users")
+                                       .child(user.getUid()).child(id);
+                               reference.addValueEventListener(new ValueEventListener() {
+                                   @Override
+                                   public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                       if (snapshot.exists()){
+                                           showUnBlockDialogBox(id);
+                                       }else {
+                                           Conversation conversation = conversationList.get(position);
+                                           clearUnreadChat(conversation.getChatWithId());
+                                           Intent intent = new Intent(mContext, Chat_Activity.class);
+                                           // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                           intent.putExtra(Chat_Activity.EXTRAS_USER, user);
+                                           intent.putExtra("userUid", conversation.getChatWithId());
+                                           mContext.startActivity(intent);
+                                       }
+                                   }
+
+                                   @Override
+                                   public void onCancelled(@NonNull DatabaseError error) {
+
+                                   }
+                               });
                            }
                        });
                    }
@@ -158,27 +183,32 @@ public class SelectedChatListAdapter extends RecyclerView.Adapter<SelectedChatLi
 
     }
 
-    private void deleteChat(String id, int position) {
-        FirebaseUser mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference conversationReference = FirebaseDatabase.getInstance().getReference()
-                .child("conversation").child(mFirebaseUser.getUid()).child(id);
-        conversationReference.removeValue();
-        conversationList.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeRemoved(position,conversationList.size());
+    private void showUnBlockDialogBox(String id) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        LayoutInflater inflater = ((Users_Activity)mContext).getLayoutInflater();
+        View add_view = inflater.inflate(R.layout.unblock_alert_dialog_screen,null);
+
+        AppCompatButton addBtn = add_view.findViewById(R.id.yes);
+        AppCompatButton cancelBtn = add_view.findViewById(R.id.cancel);
+        builder.setView(add_view);
+        AlertDialog alertDialog = builder.create();
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                unBlockUser(id);
+                alertDialog.dismiss();
+            }
+        });
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog.show();
+
     }
 
-    private void blockUser(String userId){
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
-
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Blocked Users")
-                .child(user.getUid()).child(userId);
-
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("id", userId);
-        reference.updateChildren(hashMap);
-    }
 
     private void unBlockUser(String userId){
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -188,7 +218,6 @@ public class SelectedChatListAdapter extends RecyclerView.Adapter<SelectedChatLi
                 .child(user.getUid()).child(userId);
         reference.removeValue();
     }
-
 
     @Override
     public int getItemCount() {
@@ -218,6 +247,14 @@ public class SelectedChatListAdapter extends RecyclerView.Adapter<SelectedChatLi
             user_item_back_view = itemView.findViewById(R.id.user_item_view);
             layout_goto_msg = itemView.findViewById(R.id.layout_goto_msg);
             user_check = itemView.findViewById(R.id.user_check);
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                 if (itemCheckboxClickListener != null){
+                     itemCheckboxClickListener.onItemClick(getAdapterPosition(),b);
+                 }
+                }
+            });
         }
     }
 
@@ -259,4 +296,7 @@ public class SelectedChatListAdapter extends RecyclerView.Adapter<SelectedChatLi
         });
     }
 
+    public void setItemCheckboxClickListener(ItemCheckboxClickListener itemCheckboxClickListener){
+        this.itemCheckboxClickListener = itemCheckboxClickListener;
+    }
 }

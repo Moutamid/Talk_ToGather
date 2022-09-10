@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -16,6 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -35,6 +39,7 @@ import com.moutamid.talk_togather.Notifications.Sender;
 import com.moutamid.talk_togather.Notifications.Token;
 import com.moutamid.talk_togather.R;
 import com.moutamid.talk_togather.SharedPreferencesManager;
+import com.moutamid.talk_togather.databinding.ActivityUserProfileBinding;
 import com.moutamid.talk_togather.listener.APIService;
 import com.squareup.picasso.Picasso;
 
@@ -58,6 +63,7 @@ public class User_Profile_Activity extends AppCompatActivity {
     private DatabaseReference db;
     private Button sayBtn;
     private FirebaseAuth mAuth;
+    private ActivityUserProfileBinding b;
     private FirebaseUser user;
     private String userId;
     private int unreadCount = 0;
@@ -72,9 +78,10 @@ public class User_Profile_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        b = ActivityUserProfileBinding.inflate(getLayoutInflater());
         prefs = new SharedPreferencesManager(this);
         theme = prefs.retrieveBoolean("theme",false);//get stored theme, zero is default
-        setContentView(R.layout.activity_user_profile);
+        setContentView(b.getRoot());
         final Animation animation = AnimationUtils.loadAnimation(this, R.anim.bounce);
 
         if (theme){
@@ -172,6 +179,7 @@ public class User_Profile_Activity extends AppCompatActivity {
 
             }
         });
+
 
         checkFollowing();
     }
@@ -446,6 +454,74 @@ public class User_Profile_Activity extends AppCompatActivity {
                                 .load(model.getImageUrl())
                                 .into(profileImg);
                     }
+
+                    if (snapshot.child("facebookId").exists()){
+                        b.imageView1.setImageResource(R.drawable.ic_add);
+                    }else {
+                        b.fbImg.setVisibility(View.GONE);
+                        b.imageView1.setVisibility(View.GONE);
+                    }
+
+                    if (snapshot.child("instaId").exists()){
+                        b.imageView2.setImageResource(R.drawable.ic_add);
+                    }else {
+                        b.instaImg.setVisibility(View.GONE);
+                        b.imageView2.setVisibility(View.GONE);
+                    }
+                    if (snapshot.child("twitterId").exists()){
+                        b.imageView3.setImageResource(R.drawable.ic_add);
+                    }else {
+                        b.twitterImg.setVisibility(View.GONE);
+                        b.imageView3.setVisibility(View.GONE);
+                    }
+                    if (snapshot.child("tiktokId").exists()){
+                        b.imageView4.setImageResource(R.drawable.ic_add);
+                    }else {
+                        b.tiktokImg.setVisibility(View.GONE);
+                        b.imageView4.setVisibility(View.GONE);
+                    }
+                    if (snapshot.child("linkdinId").exists()){
+                        b.imageView5.setImageResource(R.drawable.ic_add);
+                    }else {
+                        b.linkdinImg.setVisibility(View.GONE);
+                        b.imageView5.setVisibility(View.GONE);
+                    }
+
+                    b.fbImg.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(model.getFacebookId()));
+                            startActivity(browserIntent);
+                        }
+                    });
+                    b.instaImg.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(model.getInstaId()));
+                            startActivity(browserIntent);
+                        }
+                    });
+                    b.twitterImg.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(model.getTwitterId()));
+                            startActivity(browserIntent);
+                        }
+                    });
+                    b.tiktokImg.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(model.getTiktokId()));
+                            startActivity(browserIntent);
+                        }
+                    });
+                    b.linkdinImg.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(model.getLinkdinId()));
+                            startActivity(browserIntent);
+                        }
+                    });
                 }
             }
 

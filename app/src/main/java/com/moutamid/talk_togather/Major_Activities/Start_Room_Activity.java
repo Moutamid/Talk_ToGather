@@ -25,6 +25,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -37,7 +40,9 @@ import com.moutamid.talk_togather.R;
 import com.moutamid.talk_togather.SharedPreferencesManager;
 import com.moutamid.talk_togather.listener.ItemCheckboxClickListener;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class Start_Room_Activity extends AppCompatActivity {
@@ -73,7 +78,6 @@ public class Start_Room_Activity extends AppCompatActivity {
             R.string.category_beauty,
             R.string.category_culture,
             R.string.category_lifestyle,
-            R.string.category_freelance,
             R.string.category_gaming,
             R.string.category_travel,
             R.string.category_social};
@@ -179,8 +183,38 @@ public class Start_Room_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 datePickDialog();
+                //selectDatePickDialig();
             }
         });
+    }
+
+    private void selectDatePickDialig() {
+        Calendar calendar = Calendar.getInstance();
+        int yy = calendar.get(Calendar.YEAR);
+        int mm = calendar.get(Calendar.MONTH);
+        int dd = calendar.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog datePicker = new DatePickerDialog(Start_Room_Activity.this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+             //   String[] mons = new DateFormatSymbols(Locale.ENGLISH).getMonths();
+                SimpleDateFormat curFormater = new SimpleDateFormat("dd/mm/yyyy");
+                Date selected_date = new Date(year,monthOfYear,dayOfMonth-1);
+                time = curFormater.format(selected_date);
+
+                Calendar calendar1 = Calendar.getInstance();
+                //   SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+                int y = calendar1.get(Calendar.YEAR);
+                int m = calendar1.get(Calendar.MONTH);
+                int d = calendar1.get(Calendar.DAY_OF_MONTH);
+                int nextdd = calendar1.get(Calendar.DAY_OF_MONTH)+1;
+
+                String current = d + "/" + m + "/" +y;
+                String next = nextdd + "/" + m + "/" +y;
+
+                Toast.makeText(Start_Room_Activity.this, time + "\n" + current + "\n" + next, Toast.LENGTH_SHORT).show();
+            }
+        }, yy, mm, dd);
+        datePicker.show();
     }
 
     private void getCategoryList() {
@@ -223,7 +257,7 @@ public class Start_Room_Activity extends AppCompatActivity {
         String key = db.push().getKey();
         long timestamp = System.currentTimeMillis();
         if(!time.isEmpty()){
-            RoomDetails roomDetails = new RoomDetails(key,user.getUid(),title,description,time,category);
+            RoomDetails roomDetails = new RoomDetails(key,user.getUid(),title,description,timestamp,time,category);
             db.child(key).setValue(roomDetails);
         }else {
             RoomDetails roomDetails = new RoomDetails(key,user.getUid(),title,description,timestamp,category,live);
@@ -247,8 +281,25 @@ public class Start_Room_Activity extends AppCompatActivity {
                 int m = monthOfYear + 1;
                 String s = dayOfMonth + "/" + m + "/" + year;
                 time = s;
-                text_time_date.setText(s);
+                Calendar calendar = Calendar.getInstance();
+             //   SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+                int yy = calendar.get(Calendar.YEAR);
+                int mm = calendar.get(Calendar.MONTH)+1;
+                int dd = calendar.get(Calendar.DAY_OF_MONTH);
+                int nextdd = calendar.get(Calendar.DAY_OF_MONTH)+1;
 
+                String current = dd + "/" + mm + "/" +yy;
+                String next = nextdd + "/" + mm + "/" +yy;
+                //Toast.makeText(Start_Room_Activity.this, time + "\n" + current + "\n" + next, Toast.LENGTH_SHORT).show();
+
+                if (time.equals(current)){
+                    text_time_date.setText("Today");
+                }
+                else if (time.equals(next)){
+                    text_time_date.setText("Tomorrow");
+                }else {
+                    text_time_date.setText(time);
+                }
             }
         };
         int style = AlertDialog.THEME_HOLO_LIGHT;

@@ -2,6 +2,7 @@ package com.moutamid.talk_togather.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -16,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,6 +31,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.moutamid.talk_togather.Major_Activities.Chat_Activity;
+import com.moutamid.talk_togather.Major_Activities.Profile_Activity;
+import com.moutamid.talk_togather.Major_Activities.Users_Activity;
 import com.moutamid.talk_togather.Models.BlockedUser;
 import com.moutamid.talk_togather.Models.Chat;
 import com.moutamid.talk_togather.Models.Conversation;
@@ -95,32 +101,14 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.MyView
                                Conversation conversation = conversationList.get(position);
                                DatabaseReference reference = FirebaseDatabase.getInstance().
                                        getReference("Blocked Users")
-                                       .child(userUid);
-
-                               reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                       .child(userUid).child(id);
+                               reference.addValueEventListener(new ValueEventListener() {
                                    @Override
-                                   public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                       if (dataSnapshot.exists()) {
-                                           for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                               BlockedUser blockedUser = snapshot.getValue(BlockedUser.class);
-
-                                               if (blockedUser.getId().equals(conversation.getChatWithId())) {
-                                                   isBlocked = true;
-                                               }
-
-                                               if (!isBlocked) {
-                                                   clearUnreadChat(conversation.getChatWithId());
-                                                   Intent intent = new Intent(mContext, Chat_Activity.class);
-                                                   // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                   intent.putExtra(Chat_Activity.EXTRAS_USER, user);
-                                                   intent.putExtra("userUid", conversation.getChatWithId());
-                                                   mContext.startActivity(intent);
-                                               } else {
-                                                   Toast.makeText(mContext, "Unblock this user", Toast.LENGTH_LONG).show();
-                                               }
-                                           }
+                                   public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                       if (snapshot.exists()){
+                                           showUnBlockDialogBox(id);
                                        }else {
-
+                                           Conversation conversation = conversationList.get(position);
                                            clearUnreadChat(conversation.getChatWithId());
                                            Intent intent = new Intent(mContext, Chat_Activity.class);
                                            // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -135,7 +123,6 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.MyView
 
                                    }
                                });
-
                            }
                        });
                    }
@@ -176,6 +163,41 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.MyView
             }
 
 
+    }
+
+    private void showUnBlockDialogBox(String id) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        LayoutInflater inflater = ((Users_Activity)mContext).getLayoutInflater();
+        View add_view = inflater.inflate(R.layout.unblock_alert_dialog_screen,null);
+
+        AppCompatButton addBtn = add_view.findViewById(R.id.yes);
+        AppCompatButton cancelBtn = add_view.findViewById(R.id.cancel);
+        builder.setView(add_view);
+        AlertDialog alertDialog = builder.create();
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                unBlockUser(id);
+                alertDialog.dismiss();
+            }
+        });
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog.show();
+
+    }
+
+    private void unBlockUser(String userId){
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Blocked Users")
+                .child(user.getUid()).child(userId);
+        reference.removeValue();
     }
 
     @Override

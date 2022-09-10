@@ -19,6 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -69,6 +72,10 @@ public class Login_Activity extends AppCompatActivity {
 
         }
         getLocale();
+        MobileAds.initialize(getApplicationContext(), getString(R.string.admob_app_id));
+        AdView adView = (AdView) findViewById(R.id.adView);
+        AdRequest request = new AdRequest.Builder().build();
+        adView.loadAd(request);
         emailTxt = findViewById(R.id.email);
         passwordTxt = findViewById(R.id.password);
         rememberSwitch = findViewById(R.id.switch1);

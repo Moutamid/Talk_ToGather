@@ -38,6 +38,7 @@
 
     </LinearLayout>
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -144,7 +145,6 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_margin="10dp"
-                                    android:layout_weight="1"
                                     android:padding="10dp"
                                     android:id="@+id/fullname"
                                     android:textColor="@color/textColor"
@@ -390,40 +390,107 @@
                         android:layout_margin="20dp"
                         android:orientation="horizontal">
 
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_weight="1"
-                            android:id="@+id/fbImg"
-                            android:src="@drawable/fb_img"/>
 
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_weight="1"
-                            android:id="@+id/instaImg"
-                            android:src="@drawable/insta_img"/>
+                        <RelativeLayout
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
 
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_weight="1"
-                            android:id="@+id/twitterImg"
-                            android:src="@drawable/twitter_img"/>
+                            <ImageView
+                                android:id="@+id/fbImg"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/ic_fb" />
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/ic_plus"
+                                android:id="@+id/imageView1"
+                                android:layout_marginTop="-20dp"
+                                android:layout_marginLeft="20dp"
+                                android:layout_below="@+id/fbImg"/>
+                        </RelativeLayout>
 
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_weight="1"
-                            android:id="@+id/tiktokImg"
-                            android:src="@drawable/tiktok_img"/>
+                        <RelativeLayout
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
 
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_weight="1"
-                            android:id="@+id/linkdinImg"
-                            android:src="@drawable/linked_in_img"/>
+                            <ImageView
+                                android:id="@+id/instaImg"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/ic_insta" />
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/ic_plus"
+                                android:id="@+id/imageView2"
+                                android:layout_marginTop="-20dp"
+                                android:layout_marginLeft="20dp"
+                                android:layout_below="@+id/instaImg"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:id="@+id/twitterImg"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/ic_twitter" />
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/ic_plus"
+                                android:id="@+id/imageView3"
+                                android:layout_marginTop="-20dp"
+                                android:layout_marginLeft="20dp"
+                                android:layout_below="@+id/twitterImg"/>
+                        </RelativeLayout>
+                        <RelativeLayout
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:id="@+id/tiktokImg"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/ic_tiktok" />
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/ic_plus"
+                                android:id="@+id/imageView4"
+                                android:layout_marginTop="-20dp"
+                                android:layout_marginLeft="20dp"
+                                android:layout_below="@+id/tiktokImg"/>
+                        </RelativeLayout>
+                        <RelativeLayout
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:id="@+id/linkdinImg"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_weight="1"
+                                android:src="@drawable/ic_linkedin" />
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/ic_plus"
+                                android:id="@+id/imageView5"
+                                android:layout_marginTop="-20dp"
+                                android:layout_marginLeft="20dp"
+                                android:layout_below="@+id/linkdinImg"/>
+                        </RelativeLayout>
+
+
                     </LinearLayout>
 
                 </LinearLayout>

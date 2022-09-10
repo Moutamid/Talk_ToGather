@@ -15,11 +15,13 @@ public class RoomDetails {
 
     }
 
-    public RoomDetails(String id,String creatorId, String title, String description, String date, String category) {
+    public RoomDetails(String id,String creatorId, String title, String description,
+                       long timestamp,String date, String category) {
         this.id = id;
         this.creatorId = creatorId;
         this.title = title;
         this.description = description;
+        this.timestamp = timestamp;
         this.date = date;
         this.category = category;
     }

@@ -77,7 +77,6 @@ public class Adapter_Conversation extends RecyclerView.Adapter<Adapter_Conversat
                         public void onClick(View view) {
                           //  if (!model.getId().equals(user.getUid())){
                                 Intent intent = new Intent(context, User_Profile_Activity.class);
-                                // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 intent.putExtra("userUid", model.getId());
                                 context.startActivity(intent);
                            // }

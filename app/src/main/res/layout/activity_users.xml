@@ -41,6 +41,7 @@
             android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_margin="10dp"
+            android:clickable="false"
             android:src="@drawable/ic_baseline_delete_outline_24"
             android:visibility="visible" />
 
@@ -63,6 +64,7 @@
 
     </LinearLayout>
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -84,15 +86,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/block_txt"
+                    android:text="@string/select_chat"
+                    android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
                     android:textColor="@color/black"
+                    android:id="@+id/select"
                     android:textSize="20sp"
-                    android:id="@+id/block"
                     android:layout_marginLeft="10dp"/>
 
                 <View
@@ -104,13 +106,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                android:text="@string/block_report_txt"
-                    android:layout_marginBottom="5dp"
+                    android:text="@string/block_txt"
                     android:layout_marginTop="5dp"
                     android:textColor="@color/black"
-                    android:id="@+id/report"
                     android:textSize="20sp"
+                    android:id="@+id/block"
+                    android:enabled="false"
                     android:layout_marginLeft="10dp"/>
+
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>

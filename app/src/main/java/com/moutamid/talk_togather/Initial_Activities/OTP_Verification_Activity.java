@@ -20,6 +20,9 @@ import android.widget.Toast;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.chaos.view.PinView;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
@@ -168,7 +171,7 @@ public class OTP_Verification_Activity extends AppCompatActivity {
 
             @Override
             public void onVerificationFailed(@NonNull FirebaseException e) {
-                Toast.makeText(OTP_Verification_Activity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+                //Toast.makeText(OTP_Verification_Activity.this,e.getMessage(),Toast.LENGTH_LONG).show();
             }
         };
     }
@@ -201,14 +204,19 @@ public class OTP_Verification_Activity extends AppCompatActivity {
                     hashMap.put("remember",remember);
                     hashMap.put("status","Offline");
                     userDatabase.child(user.getUid()).updateChildren(hashMap);
-                    Intent intent = new Intent(OTP_Verification_Activity.this,Login_Activity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
+                    if (remember){
+                        Intent intent = new Intent(OTP_Verification_Activity.this,Login_Activity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }else {
+                        Intent intent = new Intent(OTP_Verification_Activity.this,SignUp_Activity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }
                     Animatoo.animateFade(OTP_Verification_Activity.this);
                 }
                 else{
-
-                    Toast.makeText(OTP_Verification_Activity.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();
+//                    Toast.makeText(OTP_Verification_Activity.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();
                 }
             }
         });

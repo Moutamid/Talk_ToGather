@@ -3,16 +3,42 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/drawable/button.xml" value="0.169" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/drawable/button2.xml" value="0.169" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.169" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/drawable/ic_search.xml" value="0.169" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/drawable/shapable_back_item.xml" value="0.169" />
         <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/drawable/shape_circle.xml" value="0.1565" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_catagories.xml" value="0.12273550724637682" />
         <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_catagory_details.xml" value="0.12092391304347826" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_chat.xml" value="0.14266304347826086" />
         <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_conversation.xml" value="0.12092391304347826" />
         <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_dash_board.xml" value="0.12092391304347826" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_edit_profile.xml" value="0.14266304347826086" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_faqsactivity.xml" value="0.12273550724637682" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_get_profile_pic_acticity.xml" value="0.14266304347826086" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_login.xml" value="0.14266304347826086" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_notification.xml" value="0.12273550724637682" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_otp_number.xml" value="0.12273550724637682" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_otp_verification.xml" value="0.12273550724637682" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_profile.xml" value="0.1331521739130435" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_search.xml" value="0.1331521739130435" />
         <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_see_all_category_list.xml" value="0.12273550724637682" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_settings.xml" value="0.14266304347826086" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_sign_up.xml" value="0.3143544506816359" />
         <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_start_room.xml" value="0.12092391304347826" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_user_profile.xml" value="0.14266304347826086" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_users.xml" value="0.12273550724637682" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_welcome_screen.xml" value="0.14266304347826086" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/fragment_start_3.xml" value="0.12273550724637682" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/link_alert_dialog_screen.xml" value="0.1331521739130435" />
         <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/row_coversation.xml" value="0.12273550724637682" />
         <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/row_detail.xml" value="0.2662013958125623" />
         <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/row_selected_catagories.xml" value="0.12273550724637682" />
         <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/row_upcoming.xml" value="0.12092391304347826" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/row_users.xml" value="0.1331521739130435" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/unblock_alert_dialog_screen.xml" value="0.1" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/user_custom_layout.xml" value="0.1331521739130435" />
       </map>
     </option>
   </component>

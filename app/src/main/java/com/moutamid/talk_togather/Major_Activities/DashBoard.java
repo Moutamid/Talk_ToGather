@@ -1,12 +1,15 @@
 package com.moutamid.talk_togather.Major_Activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.icu.text.SimpleDateFormat;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -17,6 +20,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,17 +47,18 @@ import com.moutamid.talk_togather.R;
 import com.moutamid.talk_togather.SharedPreferencesManager;
 import com.squareup.picasso.Picasso;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DashBoard extends AppCompatActivity {
 
-    ImageView setting_icon , message_icon , notification_icon ;
+    ImageView setting_icon , message_icon , notification_icon, search_icon ;
     private CircleImageView profile_img_dashboard;
     Button start_room_btn;
 
@@ -86,12 +93,11 @@ public class DashBoard extends AppCompatActivity {
             R.string.category_beauty,
             R.string.category_culture,
             R.string.category_lifestyle,
-            R.string.category_freelance,
             R.string.category_gaming,
             R.string.category_travel,
             R.string.category_social};
     private String[] catagories_gathering = {"0 " + gatheing, "0 "+ gatheing, "0 "+ gatheing,
-            "0 " + gatheing, "0 "+ gatheing, "0 "+ gatheing,"0 "+ gatheing,"0 "+ gatheing,
+            "0 " + gatheing, "0 "+ gatheing, "0 "+ gatheing,"0 "+ gatheing,
             "0 "+ gatheing,"0 "+ gatheing,"0 "+ gatheing,"0 "+ gatheing,"0 "+ gatheing,"0 "+ gatheing,
             "0 "+ gatheing,"0 "+ gatheing,"0 "+ gatheing,"0 "+ gatheing,"0 "+ gatheing,"0 "+ gatheing};
     private int[] images1_catagories = {
@@ -100,7 +106,6 @@ public class DashBoard extends AppCompatActivity {
             R.drawable.ic_icn_education,
             R.drawable.ic_icn_art,
             R.drawable.ic_icn_art,
-            R.drawable.ic_icn_world,
             R.drawable.ic_icn_world,
             R.drawable.ic_icn_world,
             R.drawable.ic_icn_world,
@@ -167,6 +172,7 @@ public class DashBoard extends AppCompatActivity {
         start_room_btn.animate().alpha(1f).setDuration(3000);
 
         setting_icon = findViewById(R.id.settings_icon);
+        search_icon = findViewById(R.id.search_icon);
         message_icon = findViewById(R.id.message_icon);
         notification_icon = findViewById(R.id.notification_icon);
         profile_img_dashboard = findViewById(R.id.profile_dashbord_img);
@@ -200,6 +206,15 @@ public class DashBoard extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DashBoard.this , Settings_Activity.class);
+                startActivity(intent);
+                Animatoo.animateSlideUp(DashBoard.this);
+                finish();
+            }
+        });
+        search_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DashBoard.this , SearchActivity.class);
                 startActivity(intent);
                 Animatoo.animateSlideUp(DashBoard.this);
                 finish();
@@ -336,6 +351,7 @@ public class DashBoard extends AppCompatActivity {
     }
 
     private void load_live_gathering() {
+
         Query query = roomDB.orderByChild("live").equalTo(true);
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -344,7 +360,12 @@ public class DashBoard extends AppCompatActivity {
                     liveList.clear();
                     for (DataSnapshot ds : snapshot.getChildren()){
                         RoomDetails model = ds.getValue(RoomDetails.class);
-                        liveList.add(model);
+                        long time = getHour(model.getTimestamp());
+                        if(time <= 2){
+                            liveList.add(model);
+                        }else {
+                            roomDB.child(model.getId()).removeValue();
+                        }
                     }
                     view2.setVisibility(View.GONE);
                     live_recycler.setVisibility(View.VISIBLE);
@@ -364,6 +385,33 @@ public class DashBoard extends AppCompatActivity {
         });
     }
 
+    long daysDiff;
+    public long getHour(long time) {
+        try {
+            SimpleDateFormat sdf = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+                //Date dateBefore = sdf.parse("04/21/2022");
+                //  Date dateAfter = sdf.parse("04/25/2022");
+                Calendar calendar1 = Calendar.getInstance();
+                calendar1.setTimeInMillis(time);
+                Calendar calendar2 = Calendar.getInstance();
+                String date = sdf.format(calendar1.getTime());
+                String date1 = sdf.format(calendar2.getTime());
+                Date dateBefore = sdf.parse(date);
+                Date dateAfter = sdf.parse(date1);
+                long timeDiff = Math.abs(dateAfter.getTime() - dateBefore.getTime());
+                daysDiff = TimeUnit.DAYS.convert(timeDiff, TimeUnit.MILLISECONDS);
+                long hours = TimeUnit.DAYS.toHours(daysDiff);
+                //  Toast.makeText(this, "" + hours, Toast.LENGTH_SHORT).show();
+                System.out.println("The number of days between dates: " + daysDiff);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return daysDiff;
+    }
+
     private void load_upcoming() {
         upcomingList.clear();
         Calendar calendar = Calendar.getInstance();
@@ -376,7 +424,7 @@ public class DashBoard extends AppCompatActivity {
             int dd = calendar.get(Calendar.DAY_OF_MONTH);
             String date = dd+"/"+mm+"/"+yy;
 
-            Query query = roomDB.orderByChild("timestamp").equalTo(0);
+            Query query = roomDB.orderByChild("live").equalTo(false);
             query.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {

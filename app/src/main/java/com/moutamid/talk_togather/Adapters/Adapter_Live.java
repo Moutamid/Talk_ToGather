@@ -1,7 +1,10 @@
 package com.moutamid.talk_togather.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
+import android.os.Build;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
@@ -33,7 +37,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class Adapter_Live extends RecyclerView.Adapter<Adapter_Live.HolderAndroid> {
 
@@ -63,12 +69,14 @@ public class Adapter_Live extends RecyclerView.Adapter<Adapter_Live.HolderAndroi
         holder.title.setText(title_tv);
         holder.heading.setText(heading_tv);
 
-        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
-        cal.setTimeInMillis(modelAndroid.getTimestamp());
-        String date = DateFormat.format("dd/M/yyyy", cal).toString();
+      //  Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        //cal.setTimeInMillis(modelAndroid.getTimestamp());
+        //String date = DateFormat.format("dd/M/yyyy", cal).toString();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
-        holder.timer.setText(date);
+       // holder.timer.setText(date);
+
+        getDaysHours(modelAndroid.getTimestamp(),holder.timer);
         DatabaseReference roomDB = FirebaseDatabase.getInstance().getReference().child("Rooms");
         roomDB.child(modelAndroid.getId()).child("users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -309,8 +317,39 @@ public class Adapter_Live extends RecyclerView.Adapter<Adapter_Live.HolderAndroi
                 intent.putExtra("createdId",modelAndroid.getCreatorId());
                 context.startActivity(intent);
                 Animatoo.animateSlideUp(context);
+                ((Activity)context).finish();
             }
         });
+    }
+
+    private void getDaysHours(long timestamp, TextView timer) {
+        try {
+            SimpleDateFormat sdf = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+
+                //Date dateBefore = sdf.parse("04/21/2022");
+                //  Date dateAfter = sdf.parse("04/25/2022");
+                Calendar calendar1 = Calendar.getInstance();
+                calendar1.setTimeInMillis(timestamp);
+                Calendar calendar2 = Calendar.getInstance();
+                String date = sdf.format(calendar1.getTime());
+                String date1 = sdf.format(calendar2.getTime());
+                Date dateBefore = sdf.parse(date);
+                Date dateAfter = sdf.parse(date1);
+                long timeDiff = Math.abs(dateAfter.getTime() - dateBefore.getTime());
+                long daysDiff = TimeUnit.DAYS.convert(timeDiff, TimeUnit.MILLISECONDS);
+                long hours = TimeUnit.DAYS.toHours(daysDiff);
+                if (daysDiff == 0) {
+                    timer.setText("Today");
+                } else {
+                    timer.setText(daysDiff + " day ");
+                }
+                System.out.println("The number of days between dates: " + daysDiff);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -16,6 +16,11 @@ public class User implements Parcelable{
     private boolean remember;
     private String status;
     private long timestamp;
+    private String facebookId;
+    private String linkdinId;
+    private String tiktokId;
+    private String instaId;
+    private String twitterId;
 
     public User(){
 
@@ -35,6 +40,7 @@ public class User implements Parcelable{
         this.timestamp = timestamp;
     }
 
+
     protected User(Parcel in) {
         id = in.readString();
         phone = in.readString();
@@ -47,6 +53,11 @@ public class User implements Parcelable{
         remember = in.readByte() != 0;
         status = in.readString();
         timestamp = in.readLong();
+        facebookId = in.readString();
+        linkdinId = in.readString();
+        tiktokId = in.readString();
+        instaId = in.readString();
+        twitterId = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -60,6 +71,48 @@ public class User implements Parcelable{
             return new User[size];
         }
     };
+
+    public String getFacebookId() {
+        return facebookId;
+    }
+
+    public String getLinkdinId() {
+        return linkdinId;
+    }
+
+    public String getTiktokId() {
+        return tiktokId;
+    }
+
+    public String getInstaId() {
+        return instaId;
+    }
+
+    public String getTwitterId() {
+        return twitterId;
+    }
+
+    public void setFacebookId(String facebookId) {
+        this.facebookId = facebookId;
+    }
+
+    public void setLinkdinId(String linkdinId) {
+        this.linkdinId = linkdinId;
+    }
+
+    public void setTiktokId(String tiktokId) {
+        this.tiktokId = tiktokId;
+    }
+
+    public void setInstaId(String instaId) {
+        this.instaId = instaId;
+    }
+
+    public void setTwitterId(String twitterId) {
+        this.twitterId = twitterId;
+    }
+
+
 
     public String getFname() {
         return fname;

@@ -2,12 +2,17 @@ package com.moutamid.talk_togather.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,7 +28,12 @@ import com.moutamid.talk_togather.Models.User;
 import com.moutamid.talk_togather.R;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class Adapter_Upcoming extends RecyclerView.Adapter<Adapter_Upcoming.HolderAndroid> {
 
@@ -51,9 +61,10 @@ public class Adapter_Upcoming extends RecyclerView.Adapter<Adapter_Upcoming.Hold
         String heading_tv = modelAndroid.getTitle();
         String timer_tv = modelAndroid.getDate();
 
+        getDaysHours(modelAndroid.getTimestamp(),holder.timer);
+
         holder.title.setText(title_tv);
         holder.heading.setText(heading_tv);
-        holder.timer.setText(timer_tv);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         DatabaseReference roomDB = FirebaseDatabase.getInstance().getReference().child("Rooms");
@@ -290,6 +301,41 @@ public class Adapter_Upcoming extends RecyclerView.Adapter<Adapter_Upcoming.Hold
         });
 
     }
+
+    private void getDaysHours(long timestamp, TextView timer) {
+        try {
+            SimpleDateFormat sdf = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+
+                //Date dateBefore = sdf.parse("04/21/2022");
+                //  Date dateAfter = sdf.parse("04/25/2022");
+                Calendar calendar1 = Calendar.getInstance();
+                calendar1.setTimeInMillis(timestamp);
+                Calendar calendar2 = Calendar.getInstance();
+                String date = sdf.format(calendar1.getTime());
+                String date1 = sdf.format(calendar2.getTime());
+                Date dateBefore = sdf.parse(date);
+                Date dateAfter = sdf.parse(date1);
+                long timeDiff = Math.abs(dateAfter.getTime() - dateBefore.getTime());
+                long daysDiff = TimeUnit.DAYS.convert(timeDiff, TimeUnit.MILLISECONDS);
+                int seconds = (int) TimeUnit.MILLISECONDS.toSeconds(daysDiff);
+                int minute = (int) TimeUnit.MILLISECONDS.toMinutes(daysDiff);
+                int hours = (int) TimeUnit.MILLISECONDS.toHours(daysDiff);
+                //  int days = (int) TimeUnit.MILLISECONDS.toDays(timeDiff);
+
+                if (daysDiff == 0) {
+                    timer.setText("Today");
+                } else {
+                    timer.setText(daysDiff + " day ");
+                }
+                System.out.println("The number of days between dates: " + daysDiff);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public int getItemCount() {

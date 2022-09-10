@@ -12,6 +12,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.moutamid.talk_togather.Major_Activities.DashBoard;
 import com.moutamid.talk_togather.R;
 import com.moutamid.talk_togather.SharedPreferencesManager;
