@@ -71,4 +71,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics:21.1.0'
     // animation between activities
     implementation 'com.github.mohammadatif:Animatoo:master'
+    implementation 'androidx.work:work-runtime-ktx:2.7.1'
 }
