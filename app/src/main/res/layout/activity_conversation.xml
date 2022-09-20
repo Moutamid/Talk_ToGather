@@ -329,8 +329,7 @@
                 <TextView
                     android:id="@+id/leave_room"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="20dp"
+                    android:layout_height="50dp"
                     android:layout_margin="10dp"
                     android:text="@string/leave_btn"
                     android:layout_weight="1"

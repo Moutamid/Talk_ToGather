@@ -33,7 +33,7 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:text="Save"
             android:layout_marginTop="20dp"
             android:id="@+id/save"
@@ -42,7 +42,7 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:text="Cancel"
             android:layout_marginTop="10dp"
             android:id="@+id/cancel"

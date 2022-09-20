@@ -211,7 +211,7 @@
                 <Button
                     android:id="@+id/sign_up_btn"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="45dp"
                     android:layout_below="@id/layout_remeber"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
@@ -219,7 +219,6 @@
                     android:layout_marginBottom="20dp"
                     android:layout_weight="1"
                     android:background="@drawable/shapable_recatngle"
-                    android:padding="5dp"
                     android:elevation="10dp"
                     android:text="@string/signup_btn"
                     android:textColor="@color/white"

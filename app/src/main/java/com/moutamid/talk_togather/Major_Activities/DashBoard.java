@@ -160,20 +160,20 @@ public class DashBoard extends AppCompatActivity {
         }
         getLocale();
         upcoming_recycler = findViewById(R.id.recyclerView_Upcoming);
-        upcoming_recycler.setAlpha(0f);
-        upcoming_recycler.animate().alpha(1f).setDuration(3000);
+        //upcoming_recycler.setAlpha(0f);
+        //upcoming_recycler.animate().alpha(1f).setDuration(3000);
 
         live_recycler = findViewById(R.id.recycler_live_gathering);
-        live_recycler.setAlpha(0f);
-        live_recycler.animate().alpha(1f).setDuration(3000);
+        //live_recycler.setAlpha(0f);
+        //live_recycler.animate().alpha(1f).setDuration(3000);
 
         catagories_recycler = findViewById(R.id.recycler_catagories);
-        catagories_recycler.setAlpha(0f);
-        catagories_recycler.animate().alpha(1f).setDuration(3000);
+        //catagories_recycler.setAlpha(0f);
+        //catagories_recycler.animate().alpha(1f).setDuration(3000);
 
         start_room_btn = findViewById(R.id.start_room_btn);
-        start_room_btn.setAlpha(0f);
-        start_room_btn.animate().alpha(1f).setDuration(3000);
+        //start_room_btn.setAlpha(0f);
+        //start_room_btn.animate().alpha(1f).setDuration(3000);
 
         setting_icon = findViewById(R.id.settings_icon);
         search_icon = findViewById(R.id.search_icon);
@@ -497,7 +497,6 @@ public class DashBoard extends AppCompatActivity {
             }
         });
         alertDialog.show();
-
     }
 
     private void getUserDetails() {
@@ -515,6 +514,10 @@ public class DashBoard extends AppCompatActivity {
                                 .load(model.getImageUrl())
                                 .into(profile_img_dashboard);
                     }
+
+                    if (snapshot.child("banned").exists()){
+                        showBannedDialogBox();
+                    }
                 }
             }
 
@@ -523,6 +526,23 @@ public class DashBoard extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void showBannedDialogBox() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(DashBoard.this);
+        LayoutInflater inflater = getLayoutInflater();
+        View add_view = inflater.inflate(R.layout.banned_alert_dialog_screen,null);
+
+        AppCompatButton addBtn = add_view.findViewById(R.id.ok);
+        builder.setView(add_view);
+        AlertDialog alertDialog = builder.create();
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog.show();
     }
 
 

@@ -61,7 +61,7 @@
 
             <TextView
                 android:layout_width="120dp"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:text="Room"
                 android:gravity="center"
                 android:id="@+id/room"
@@ -71,7 +71,7 @@
 
             <TextView
                 android:layout_width="120dp"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:text="User"
                 android:gravity="center"
                 android:layout_marginLeft="10dp"

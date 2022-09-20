@@ -233,7 +233,7 @@
                         <TextView
                             android:id="@+id/follow"
                             android:layout_width="100dp"
-                            android:layout_height="45dp"
+                            android:layout_height="40dp"
                             android:background="@drawable/button"
                             android:layout_gravity="center_vertical"
                             android:text="@string/follow_btn"
@@ -245,7 +245,7 @@
                         <TextView
                             android:id="@+id/followingBtn"
                             android:layout_width="100dp"
-                            android:layout_height="45dp"
+                            android:layout_height="40dp"
                             android:background="@drawable/button2"
                             android:layout_gravity="center_vertical"
                             android:text="Following"
@@ -309,7 +309,7 @@
                         <Button
                             android:id="@+id/say"
                             android:layout_width="300dp"
-                            android:layout_height="45dp"
+                            android:layout_height="40dp"
                             android:background="@drawable/button"
                             android:layout_gravity="center"
                             android:text="@string/hi_btn"

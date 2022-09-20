@@ -49,7 +49,7 @@
             <TextView
                 android:id="@+id/unfollowingBtn"
                 android:layout_width="100dp"
-                android:layout_height="45dp"
+                android:layout_height="40dp"
                 android:background="@drawable/button2"
                 android:layout_gravity="center_vertical"
                 android:text="UNFOLLOW"
