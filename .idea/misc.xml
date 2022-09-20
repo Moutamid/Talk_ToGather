@@ -16,6 +16,7 @@
         <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_dash_board.xml" value="0.12092391304347826" />
         <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_edit_profile.xml" value="0.14266304347826086" />
         <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_faqsactivity.xml" value="0.12273550724637682" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_follower_details.xml" value="0.12273550724637682" />
         <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_get_profile_pic_acticity.xml" value="0.14266304347826086" />
         <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_login.xml" value="0.14266304347826086" />
         <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_notification.xml" value="0.12273550724637682" />
@@ -30,6 +31,8 @@
         <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_user_profile.xml" value="0.14266304347826086" />
         <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_users.xml" value="0.12273550724637682" />
         <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/activity_welcome_screen.xml" value="0.14266304347826086" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/delete_alert_dialog_screen.xml" value="0.14266304347826086" />
+        <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/follower_row_users.xml" value="0.12273550724637682" />
         <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/fragment_start_3.xml" value="0.12273550724637682" />
         <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/link_alert_dialog_screen.xml" value="0.1331521739130435" />
         <entry key="..\:/New folder/Talk_ToGather/Talk_ToGather/app/src/main/res/layout/row_coversation.xml" value="0.12273550724637682" />

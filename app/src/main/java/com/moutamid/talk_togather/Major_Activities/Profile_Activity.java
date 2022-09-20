@@ -140,8 +140,23 @@ public class Profile_Activity extends AppCompatActivity {
                 showLinkDialog("linkdin");
             }
         });
+        b.followBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Profile_Activity.this,FollowerDetails.class);
+                intent.putExtra("mode","follower");
+                startActivity(intent);
+            }
+        });
 
-
+        b.followingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Profile_Activity.this,FollowerDetails.class);
+                intent.putExtra("mode","following");
+                startActivity(intent);
+            }
+        });
         getUserDetails();
         getFollowers();
     }

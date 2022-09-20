@@ -2,8 +2,10 @@ package com.moutamid.talk_togather.Major_Activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -11,6 +13,7 @@ import android.content.res.Configuration;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -45,6 +48,7 @@ import com.moutamid.talk_togather.Models.User;
 import com.moutamid.talk_togather.Notifications.Token;
 import com.moutamid.talk_togather.R;
 import com.moutamid.talk_togather.SharedPreferencesManager;
+import com.moutamid.talk_togather.listener.ItemClickListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -185,9 +189,8 @@ public class DashBoard extends AppCompatActivity {
         user = mAuth.getCurrentUser();
         db = FirebaseDatabase.getInstance().getReference().child("Users");
         roomDB = FirebaseDatabase.getInstance().getReference().child("Rooms");
-        mConversationReference = FirebaseDatabase.getInstance().getReference().child("conversation").child(user.getUid());
-        notifyDB = FirebaseDatabase.getInstance().getReference("Notifications")
-                .child(user.getUid());
+        mConversationReference = FirebaseDatabase.getInstance().getReference().child("conversation");
+        notifyDB = FirebaseDatabase.getInstance().getReference("Notifications");
         getUserDetails();
         upcomingList = new ArrayList<>();
         liveList = new ArrayList<>();
@@ -247,10 +250,10 @@ public class DashBoard extends AppCompatActivity {
                 finish();
             }
         });
-
-        checkChatNewArrivals();
-        checkNotificationNewArrivals();
-
+        if (user != null) {
+            checkChatNewArrivals();
+            checkNotificationNewArrivals();
+        }
         load_upcoming();
         load_live_gathering();
         load_catagories();
@@ -302,7 +305,7 @@ public class DashBoard extends AppCompatActivity {
     }
 
     private void checkNotificationNewArrivals() {
-        notifyDB.addValueEventListener(new ValueEventListener() {
+        notifyDB.child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
@@ -326,7 +329,7 @@ public class DashBoard extends AppCompatActivity {
     }
 
     private void checkChatNewArrivals() {
-        mConversationReference.addValueEventListener(new ValueEventListener() {
+        mConversationReference.child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
@@ -440,6 +443,16 @@ public class DashBoard extends AppCompatActivity {
                         upcoming_recycler.setVisibility(View.VISIBLE);
                         adapter_upcoming  = new Adapter_Upcoming(DashBoard.this,upcomingList);
                         upcoming_recycler.setAdapter(adapter_upcoming);
+                        adapter_upcoming.setItemClickListener(new ItemClickListener() {
+                            @Override
+                            public void onItemClick(int position, View view) {
+                                String id = upcomingList.get(position).getId();
+                                String creatorId = upcomingList.get(position).getCreatorId();
+                                if (creatorId.equals(user.getUid())){
+                                    showAlertDialogBox(id,position);
+                                }
+                            }
+                        });
                         adapter_upcoming.notifyDataSetChanged();
                     }else {
                         view1.setVisibility(View.VISIBLE);
@@ -455,6 +468,35 @@ public class DashBoard extends AppCompatActivity {
         }
 
         //String date = dd+"/"+mm+"/"+yy;
+
+    }
+
+    private void showAlertDialogBox(String id, int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(DashBoard.this);
+        LayoutInflater inflater = getLayoutInflater();
+        View add_view = inflater.inflate(R.layout.delete_alert_dialog_screen,null);
+
+        AppCompatButton addBtn = add_view.findViewById(R.id.yes);
+        AppCompatButton cancelBtn = add_view.findViewById(R.id.cancel);
+        builder.setView(add_view);
+        AlertDialog alertDialog = builder.create();
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                roomDB.child(id).removeValue();
+                upcomingList.remove(position);
+                adapter_upcoming.notifyItemRemoved(position);
+                adapter_upcoming.notifyItemRangeRemoved(position,upcomingList.size());
+                alertDialog.dismiss();
+            }
+        });
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog.show();
 
     }
 

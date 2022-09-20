@@ -100,8 +100,7 @@ public class Users_Activity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
-        mConversationReference = FirebaseDatabase.getInstance().getReference().child("conversation")
-                .child(user.getUid());
+        mConversationReference = FirebaseDatabase.getInstance().getReference().child("conversation");
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,7 +131,9 @@ public class Users_Activity extends AppCompatActivity {
                 user_menu_card.setVisibility(View.GONE);
                 menu.setVisibility(View.VISIBLE);
                 user_menu_card_close.setVisibility(View.GONE);
-                getSelectionChatList();
+                if (user != null) {
+                    getSelectionChatList();
+                }
             }
         });
 
@@ -163,11 +164,13 @@ public class Users_Activity extends AppCompatActivity {
                 user_menu_card_close.setVisibility(View.GONE);
             }
         });
-        getGeneralChatList();
+        if (user != null) {
+            getGeneralChatList();
+        }
     }
 
     private void getSelectionChatList() {
-        Query myQuery = mConversationReference.orderByChild("timestamp");
+        Query myQuery = mConversationReference.child(user.getUid()).orderByChild("timestamp");
         myQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -254,7 +257,7 @@ public class Users_Activity extends AppCompatActivity {
     }
 
     private void getGeneralChatList() {
-        Query myQuery = mConversationReference.orderByChild("timestamp");
+        Query myQuery = mConversationReference.child(user.getUid()).orderByChild("timestamp");
         myQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

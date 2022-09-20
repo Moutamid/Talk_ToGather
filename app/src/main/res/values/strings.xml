@@ -85,7 +85,7 @@
 
     <string name="message_txt">Messages</string>
     <string name="block_txt">Block</string>
-   <!-- <string name="block_report_txt">Block and Report</string>-->
+    <!-- <string name="block_report_txt">Block and Report</string>-->
     <string name="select_chat">Select Chat</string>
     <string name="create_room_txt">Create a new room</string>
     <string name="title_txt">Title</string>
@@ -131,7 +131,6 @@
     <string name="profile_screen_content">Upload a photo of your best self</string>
     <string name="next_btn">Next</string>
     <string name="title_activity_search">SearchActivity</string>
-
 
 
 </resources>

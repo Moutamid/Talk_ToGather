@@ -52,7 +52,6 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.MyView
     private List<Conversation> conversationList;
     private DatabaseReference mUserReference;
     private Context mContext;
-    boolean isBlocked = false;
 
     public ChatListAdapter(Context context, List<Conversation> conversations) {
         this.mContext = context;
@@ -106,8 +105,10 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.MyView
                                    @Override
                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
                                        if (snapshot.exists()){
+                                           //holder.user_check.setVisibility(View.VISIBLE);
                                            showUnBlockDialogBox(id);
                                        }else {
+                                           //holder.user_check.setVisibility(View.GONE);
                                            Conversation conversation = conversationList.get(position);
                                            clearUnreadChat(conversation.getChatWithId());
                                            Intent intent = new Intent(mContext, Chat_Activity.class);
@@ -152,6 +153,26 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.MyView
             holder.number.setVisibility(View.VISIBLE);
             holder.number.setText(String.valueOf(conversation.getUnreadChatCount()));
         }
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().
+                getReference("Blocked Users")
+                .child(userUid).child(id);
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    holder.user_check.setVisibility(View.VISIBLE);
+                    holder.last_msg.setText("Blocked");
+                }else {
+                    holder.user_check.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         if (!conversation.getLastMessage().equals("")) {
                 if (conversation.getType().equals("text")) {

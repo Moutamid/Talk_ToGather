@@ -33,7 +33,7 @@
             android:layout_height="35dp"
             android:layout_margin="10dp"
             android:src="@drawable/ic_baseline_share_24"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/close_profile"
@@ -202,6 +202,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
                             android:layout_weight="1"
+                            android:id="@+id/followBtn"
                             android:orientation="vertical">
 
                             <TextView
@@ -231,6 +232,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
                             android:layout_weight="1"
+                            android:id="@+id/followingBtn"
                             android:orientation="vertical">
 
                             <TextView

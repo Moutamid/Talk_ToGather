@@ -26,6 +26,7 @@ import com.moutamid.talk_togather.Major_Activities.User_Profile_Activity;
 import com.moutamid.talk_togather.Models.RoomDetails;
 import com.moutamid.talk_togather.Models.User;
 import com.moutamid.talk_togather.R;
+import com.moutamid.talk_togather.listener.ItemClickListener;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
@@ -40,6 +41,7 @@ public class Adapter_Upcoming extends RecyclerView.Adapter<Adapter_Upcoming.Hold
     private Context context;
     private ArrayList<RoomDetails> androidArrayList;
     private ArrayList<String> userList = new ArrayList<>();
+    private ItemClickListener itemClickListener;
 
     public Adapter_Upcoming(Context context, ArrayList<RoomDetails> androidArrayList) {
         this.context = context;
@@ -356,8 +358,20 @@ public class Adapter_Upcoming extends RecyclerView.Adapter<Adapter_Upcoming.Hold
             title = itemView.findViewById(R.id.upcoming_title);
             heading = itemView.findViewById(R.id.upcoming_heading);
             timer = itemView.findViewById(R.id.timer);
-
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    if (itemClickListener != null){
+                        itemClickListener.onItemClick(getAdapterPosition(),view);
+                    }
+                    return true;
+                }
+            });
         }
+    }
+
+    public void setItemClickListener(ItemClickListener itemClickListener){
+        this.itemClickListener = itemClickListener;
     }
 }
 

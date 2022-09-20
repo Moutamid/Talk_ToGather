@@ -90,6 +90,8 @@
                         android:layout_width="10dp"
                         android:layout_height="20dp" />
 
+
+
                     <TextView
                         android:id="@+id/user_msg_number"
                         android:layout_width="25dp"
@@ -115,8 +117,7 @@
                         android:layout_marginTop="2dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginBottom="2dp"
-                        android:background="@drawable/shape_circle"
-                        android:src="@drawable/ic_baseline_check_24"
+                        android:src="@drawable/ic_block"
                         android:visibility="gone" />
 
                 </LinearLayout>

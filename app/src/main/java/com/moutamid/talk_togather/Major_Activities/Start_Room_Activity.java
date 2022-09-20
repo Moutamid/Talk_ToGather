@@ -259,17 +259,21 @@ public class Start_Room_Activity extends AppCompatActivity {
         if(!time.isEmpty()){
             RoomDetails roomDetails = new RoomDetails(key,user.getUid(),title,description,timestamp,time,category);
             db.child(key).setValue(roomDetails);
+            Intent intent = new Intent(Start_Room_Activity.this , DashBoard.class);
+            startActivity(intent);
+            Animatoo.animateSlideUp(Start_Room_Activity.this);
+            finish();
         }else {
             RoomDetails roomDetails = new RoomDetails(key,user.getUid(),title,description,timestamp,category,live);
             db.child(key).setValue(roomDetails);
+            Intent intent = new Intent(Start_Room_Activity.this , Conversation_Activity.class);
+            intent.putExtra("id",key);
+            intent.putExtra("createdId",user.getUid());
+            startActivity(intent);
+            Animatoo.animateSlideUp(Start_Room_Activity.this);
+            finish();
         }
         Toast.makeText(Start_Room_Activity.this,"Room Created!",Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(Start_Room_Activity.this , Conversation_Activity.class);
-        intent.putExtra("id",key);
-        intent.putExtra("createdId",user.getUid());
-        startActivity(intent);
-        Animatoo.animateSlideUp(Start_Room_Activity.this);
-        finish();
     }
 
     private void datePickDialog() {

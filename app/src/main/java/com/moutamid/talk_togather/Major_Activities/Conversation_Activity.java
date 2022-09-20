@@ -343,6 +343,9 @@ public class Conversation_Activity extends AppCompatActivity implements AGEventH
     }
 
     private void quitCall() {
+        if (creatorId.equals(user.getUid())){
+            db.child(id).removeValue();
+        }
         Intent intent = new Intent(Conversation_Activity.this , DashBoard.class);
         startActivity(intent);
         Animatoo.animateSlideDown(Conversation_Activity.this);

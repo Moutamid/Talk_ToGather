@@ -5,9 +5,11 @@ import static androidx.recyclerview.widget.RecyclerView.VERTICAL;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,10 +30,12 @@ import com.moutamid.talk_togather.Adapters.UserListAdapter;
 import com.moutamid.talk_togather.Models.RoomDetails;
 import com.moutamid.talk_togather.Models.User;
 import com.moutamid.talk_togather.R;
+import com.moutamid.talk_togather.SharedPreferencesManager;
 import com.moutamid.talk_togather.databinding.ActivitySearchBinding;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -42,12 +46,31 @@ public class SearchActivity extends AppCompatActivity {
     private ArrayList<RoomDetails> roomDetailsList;
     private UserListAdapter userAdapter;
     private Adapter_Detail roomAdapter;
+    private SharedPreferencesManager prefs;
+    private boolean theme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         b = ActivitySearchBinding.inflate(getLayoutInflater());
         setContentView(b.getRoot());
+
+        prefs = new SharedPreferencesManager(this);
+        theme = prefs.retrieveBoolean("theme",false);
+        if (theme){
+            AppCompatDelegate
+                    .setDefaultNightMode(
+                            AppCompatDelegate
+                                    .MODE_NIGHT_YES);
+        }else {
+
+            AppCompatDelegate
+                    .setDefaultNightMode(
+                            AppCompatDelegate
+                                    .MODE_NIGHT_NO);
+
+        }
+        getLocale();
 
         userDb = FirebaseDatabase.getInstance().getReference().child("Users");
         roomDb = FirebaseDatabase.getInstance().getReference().child("Rooms");
@@ -114,6 +137,23 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
+
+    private void getLocale(){
+
+        String lang = prefs.retrieveString("lang","");
+        setLocale(lang);
+    }
+
+    private void setLocale(String lng) {
+
+        Locale locale = new Locale(lng);
+        Locale.setDefault(locale);
+
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+        getBaseContext().getResources().updateConfiguration(configuration,getBaseContext().getResources().getDisplayMetrics());
+        prefs.storeString("lang",lng);
+    }
 
     private void getRoom(String text) {
         roomDb.addValueEventListener(new ValueEventListener() {
