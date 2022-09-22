@@ -38,7 +38,7 @@ import java.util.Locale;
 
 public class Login_Activity extends AppCompatActivity {
 
-    private TextView goto_sighnup;
+  //  private TextView goto_sighnup;
     private Button login_btn;
     private EditText emailTxt,passwordTxt;
     private Switch rememberSwitch;
@@ -80,9 +80,9 @@ public class Login_Activity extends AppCompatActivity {
         passwordTxt = findViewById(R.id.password);
         rememberSwitch = findViewById(R.id.switch1);
         backImg = findViewById(R.id.arrow);
-        goto_sighnup = findViewById(R.id.goto_signup);
-        goto_sighnup.setAlpha(0f);
-        goto_sighnup.animate().alpha(1f).setDuration(2000);
+//        goto_sighnup = findViewById(R.id.goto_signup);
+    //    goto_sighnup.setAlpha(0f);
+      //  goto_sighnup.animate().alpha(1f).setDuration(2000);
 
         login_btn = findViewById(R.id.login_btn);
         login_btn.setAlpha(0f);
@@ -91,7 +91,7 @@ public class Login_Activity extends AppCompatActivity {
         user = mAuth.getCurrentUser();
         db = FirebaseDatabase.getInstance().getReference().child("Users");
         pd = new ProgressDialog(Login_Activity.this);
-        goto_sighnup.setOnClickListener(new View.OnClickListener() {
+        /*goto_sighnup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 goto_sighnup.startAnimation(animation);
@@ -99,7 +99,7 @@ public class Login_Activity extends AppCompatActivity {
                 startActivity(intent);
                 Animatoo.animateFade(Login_Activity.this);
             }
-        });
+        });*/
         checkUserExists();
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override

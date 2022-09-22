@@ -80,6 +80,11 @@ public class Users_Activity extends AppCompatActivity {
                                     .MODE_NIGHT_NO);
 
         }
+
+        MobileAds.initialize(getApplicationContext(), getString(R.string.admob_app_id));
+        AdView adView = (AdView) findViewById(R.id.adView);
+        AdRequest request = new AdRequest.Builder().build();
+        adView.loadAd(request);
         getLocale();
         close = findViewById(R.id.close_user);
         delete = findViewById(R.id.delete_user);
