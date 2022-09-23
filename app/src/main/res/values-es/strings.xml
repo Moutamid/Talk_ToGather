@@ -5,8 +5,8 @@
 
     <string name="hello_blank_fragment">Hola fragmento en blanco</string>
     <string name="private_app_id">dc2cac0b37ae4ecf8d4a80e45845cc56</string>
-    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
-    <string name="admob_banner_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="admob_app_id">ca-app-pub-1676148957772338~6297858302</string>
+    <string name="admob_banner_id">ca-app-pub-1676148957772338/3916357105</string>
 
     <string name="category_screen_title">ESTAS SON NUESTRAS CATEGORIAS FAVORITAS</string>
 
