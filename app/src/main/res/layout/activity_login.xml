@@ -181,6 +181,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 ads:adSize="BANNER"
+                android:visibility="visible"
                 android:layout_below="@id/login_btn"
                 android:layout_marginBottom="20dp"
                 android:layout_marginLeft="20dp"
@@ -188,6 +189,21 @@
                 android:layout_alignParentBottom="true"
                 ads:adUnitId="@string/admob_banner_id">
             </com.google.android.gms.ads.AdView>
+
+
+            <ImageView
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/placeholder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ads"
+                android:visibility="gone"
+                android:layout_below="@id/login_btn"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_alignParentBottom="true">
+            </ImageView>
         </RelativeLayout>
     </ScrollView>
 

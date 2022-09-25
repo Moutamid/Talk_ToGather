@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -73,9 +74,49 @@ public class Login_Activity extends AppCompatActivity {
         }
         getLocale();
         MobileAds.initialize(getApplicationContext(), getString(R.string.admob_app_id));
-        AdView adView = (AdView) findViewById(R.id.adView);
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        ImageView placeImage = (ImageView) findViewById(R.id.placeholder);
+        mAdView.setAdListener(new AdListener() {
+            private void showToast(String message) {
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdLoaded() {
+                showToast("Ad loaded.");
+                if (mAdView.getVisibility() == View.GONE) {
+                mAdView.setVisibility(View.VISIBLE);
+                placeImage.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                //  showToast(String.format("Ad failed to load with error code %d.", errorCode));
+
+                mAdView.setVisibility(View.GONE);
+                placeImage.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAdOpened() {
+                showToast("Ad opened.");
+            }
+
+            @Override
+            public void onAdClosed() {
+                showToast("Ad closed.");
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                showToast("Ad left application.");
+            }
+        });
+
         AdRequest request = new AdRequest.Builder().build();
-        adView.loadAd(request);
+        mAdView.loadAd(request);
+
         emailTxt = findViewById(R.id.email);
         passwordTxt = findViewById(R.id.password);
         rememberSwitch = findViewById(R.id.switch1);

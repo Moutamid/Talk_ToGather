@@ -9,11 +9,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -82,9 +85,48 @@ public class Users_Activity extends AppCompatActivity {
         }
 
         MobileAds.initialize(getApplicationContext(), getString(R.string.admob_app_id));
-        AdView adView = (AdView) findViewById(R.id.adView);
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        ImageView placeImage = (ImageView) findViewById(R.id.placeholder);
+        mAdView.setAdListener(new AdListener() {
+            private void showToast(String message) {
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdLoaded() {
+                Log.d("Error", String.valueOf("Ads Load"));
+                if (mAdView.getVisibility() == View.GONE) {
+                    mAdView.setVisibility(View.VISIBLE);
+                    placeImage.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+              //  showToast(String.format("Ad failed to load with error code %d.", errorCode));
+                Log.d("Error", String.valueOf(errorCode));
+                mAdView.setVisibility(View.GONE);
+                placeImage.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAdOpened() {
+                Log.d("Error", String.valueOf("Ads Open"));
+            }
+
+            @Override
+            public void onAdClosed() {
+                Log.d("Error", String.valueOf("Ads Close"));
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                showToast("Ad left application.");
+            }
+        });
+
         AdRequest request = new AdRequest.Builder().build();
-        adView.loadAd(request);
+        mAdView.loadAd(request);
         getLocale();
         close = findViewById(R.id.close_user);
         delete = findViewById(R.id.delete_user);
