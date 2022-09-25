@@ -251,30 +251,32 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         holder.notificationTime.setText(time);
 
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(notification.getFromUserId());
-        final User[] user1 = {new User()};
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users")
+                .child(notification.getFromUserId());
+      //  final User[] user1 = {new User()};
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                final User[] user = {dataSnapshot.getValue(User.class)};
-                user1[0] = user[0];
-                mUsersDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user[0].getId());
-                String userFirstName = "";
-                if(user[0].getFname().contains(" ")){
-                    userFirstName = user[0].getFname().substring(0, user[0].getFname().indexOf(" "));
-                }
-                else{
-                    userFirstName = user[0].getFname();
-                }
-                holder.notificationBody.setText(userFirstName + " sent you a message");
-                if (user[0].getImageUrl().equals("")) {
-                    holder.profile_image.setImageResource(R.drawable.profile);
-                } else {
-                    Picasso
-                            .with(mContext)
-                            .load(user[0].getImageUrl())
-                            .into(holder.profile_image)
-                    ;
+                if (dataSnapshot.exists()) {
+                    final User user = dataSnapshot.getValue(User.class);
+                    //        user1[0] = user[0];
+                    mUsersDatabase = FirebaseDatabase.getInstance().getReference().child("Users")
+                            .child(user.getId());
+                    String userFirstName = "";
+                    if (user.getFname().contains(" ")) {
+                        userFirstName = user.getFname().substring(0, user.getFname().indexOf(" "));
+                    } else {
+                        userFirstName = user.getFname();
+                    }
+                    holder.notificationBody.setText(userFirstName + " sent you a message");
+                    if (user.getImageUrl().equals("")) {
+                        holder.profile_image.setImageResource(R.drawable.profile);
+                    } else {
+                        Picasso
+                                .with(mContext)
+                                .load(user.getImageUrl())
+                                .into(holder.profile_image);
+                    }
                 }
             }
 

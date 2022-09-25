@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.moutamid.talk_togather.Major_Activities.DashBoard;
 import com.moutamid.talk_togather.R;
 import com.moutamid.talk_togather.SharedPreferencesManager;
 
@@ -19,6 +22,9 @@ public class Splash extends AppCompatActivity {
     private static int SPLASH_TIME_OUT = 3000;
     private SharedPreferencesManager prefs;
     private boolean theme;
+    private FirebaseAuth mAuth;
+    private FirebaseUser firebaseUser;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +46,24 @@ public class Splash extends AppCompatActivity {
                                     .MODE_NIGHT_NO);
 
         }
+        mAuth = FirebaseAuth.getInstance();
+        firebaseUser = mAuth.getCurrentUser();
+
         new Handler().postDelayed(new Runnable() {
             @Override
-            public void run()
-            {
-                Intent homeIntent = new Intent(Splash.this, Welcome_Screen.class);
-                startActivity(homeIntent);
-                Animatoo.animateFade(Splash.this);
-                finish();
+            public void run() {
+                if(firebaseUser != null){
+                    Intent homeIntent = new Intent(Splash.this, DashBoard.class);
+                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(homeIntent);
+                    Animatoo.animateFade(Splash.this);
+                    finish();
+                }else {
+                    Intent homeIntent = new Intent(Splash.this, Welcome_Screen.class);
+                    startActivity(homeIntent);
+                    Animatoo.animateFade(Splash.this);
+                    finish();
+                }
             }
         },SPLASH_TIME_OUT);
         getLocale();

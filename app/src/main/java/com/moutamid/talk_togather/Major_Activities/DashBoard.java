@@ -191,7 +191,6 @@ public class DashBoard extends AppCompatActivity {
         roomDB = FirebaseDatabase.getInstance().getReference().child("Rooms");
         mConversationReference = FirebaseDatabase.getInstance().getReference().child("conversation");
         notifyDB = FirebaseDatabase.getInstance().getReference("Notifications");
-        getUserDetails();
         upcomingList = new ArrayList<>();
         liveList = new ArrayList<>();
         start_room_btn.setOnClickListener(new View.OnClickListener() {
@@ -251,6 +250,7 @@ public class DashBoard extends AppCompatActivity {
             }
         });
         if (user != null) {
+            getUserDetails();
             checkChatNewArrivals();
             checkNotificationNewArrivals();
         }
