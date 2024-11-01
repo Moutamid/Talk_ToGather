@@ -1,42 +1,277 @@
 {
   "project_info": {
-    "project_number": "892992147501",
-    "firebase_url": "https://talktogatherapp-default-rtdb.firebaseio.com",
-    "project_id": "talktogatherapp",
-    "storage_bucket": "talktogatherapp.appspot.com"
+    "project_number": "609485473497",
+    "firebase_url": "https://recover-projects-2-default-rtdb.firebaseio.com",
+    "project_id": "recover-projects-2",
+    "storage_bucket": "recover-projects-2.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:892992147501:android:255ca9228c75650c90a8a4",
+        "mobilesdk_app_id": "1:609485473497:android:20262fd55f98cb8a4c60c8",
         "android_client_info": {
-          "package_name": "com.moutamid.talk_togather"
+          "package_name": "com.moutamid.chamaaa"
         }
       },
       "oauth_client": [
         {
-          "client_id": "892992147501-lh597abnf13qojopg4a7f643detiafps.apps.googleusercontent.com",
+          "client_id": "609485473497-44q1ba53v0aq72uniobb5ehg01i4mcs5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.moutamid.talk_togather",
-            "certificate_hash": "309bc07aea5fffbbbf69c8b8435d380078ec8eba"
+            "package_name": "com.moutamid.chamaaa",
+            "certificate_hash": "f39a3ca243502e996f2be8d87b2ec0391f576d60"
           }
         },
         {
-          "client_id": "892992147501-vae03vf01ksd62tbbf12mdludvmvblch.apps.googleusercontent.com",
+          "client_id": "609485473497-vmt7esrduop1fs50ngefuorg8us7tdvb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.moutamid.chamaaa",
+            "certificate_hash": "1e3a26a5f7cc069683db796efde1ab18eebe2a95"
+          }
+        },
+        {
+          "client_id": "609485473497-gvmkgl3samb7lum1lrhe2g7332baa95u.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCC0dgKmrHCRVmRMCApmKXof0UpnZA65ww"
+          "current_key": "AIzaSyBmwxpFOwJVgDv-VduTO7uGEstRbnPmaXw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "892992147501-vae03vf01ksd62tbbf12mdludvmvblch.apps.googleusercontent.com",
+              "client_id": "609485473497-gvmkgl3samb7lum1lrhe2g7332baa95u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:609485473497:android:3d92aedeabd1c2a24c60c8",
+        "android_client_info": {
+          "package_name": "com.moutamid.missscaddiee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "609485473497-gvmkgl3samb7lum1lrhe2g7332baa95u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmwxpFOwJVgDv-VduTO7uGEstRbnPmaXw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "609485473497-gvmkgl3samb7lum1lrhe2g7332baa95u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:609485473497:android:06099158d6c41ad14c60c8",
+        "android_client_info": {
+          "package_name": "com.moutamid.sra"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "609485473497-gvmkgl3samb7lum1lrhe2g7332baa95u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmwxpFOwJVgDv-VduTO7uGEstRbnPmaXw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "609485473497-gvmkgl3samb7lum1lrhe2g7332baa95u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:609485473497:android:cee6b35a8534677a4c60c8",
+        "android_client_info": {
+          "package_name": "com.moutamid.sra_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "609485473497-gvmkgl3samb7lum1lrhe2g7332baa95u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmwxpFOwJVgDv-VduTO7uGEstRbnPmaXw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "609485473497-gvmkgl3samb7lum1lrhe2g7332baa95u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:609485473497:android:f358b51941d5d4624c60c8",
+        "android_client_info": {
+          "package_name": "com.moutamid.talk_togather"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "609485473497-d7clkf1bijiq17vdtra1jeaukl5d98jk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.moutamid.talk_togather",
+            "certificate_hash": "1e3a26a5f7cc069683db796efde1ab18eebe2a95"
+          }
+        },
+        {
+          "client_id": "609485473497-gvmkgl3samb7lum1lrhe2g7332baa95u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmwxpFOwJVgDv-VduTO7uGEstRbnPmaXw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "609485473497-gvmkgl3samb7lum1lrhe2g7332baa95u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:609485473497:android:96fd3aab1f94e13f4c60c8",
+        "android_client_info": {
+          "package_name": "com.moutamid.torahsharee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "609485473497-cfu9hp55817oeb27n0s3vq5pthsb4udc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.moutamid.torahsharee",
+            "certificate_hash": "f39a3ca243502e996f2be8d87b2ec0391f576d60"
+          }
+        },
+        {
+          "client_id": "609485473497-sdcqrdbv865pefm8qrp8oef3eg46vtkv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.moutamid.torahsharee",
+            "certificate_hash": "1e3a26a5f7cc069683db796efde1ab18eebe2a95"
+          }
+        },
+        {
+          "client_id": "609485473497-gvmkgl3samb7lum1lrhe2g7332baa95u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmwxpFOwJVgDv-VduTO7uGEstRbnPmaXw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "609485473497-gvmkgl3samb7lum1lrhe2g7332baa95u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:609485473497:android:35fbd6ec605caa5f4c60c8",
+        "android_client_info": {
+          "package_name": "com.moutamid.whatzboost"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "609485473497-gvmkgl3samb7lum1lrhe2g7332baa95u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmwxpFOwJVgDv-VduTO7uGEstRbnPmaXw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "609485473497-gvmkgl3samb7lum1lrhe2g7332baa95u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:609485473497:android:e485fa9c86afd86f4c60c8",
+        "android_client_info": {
+          "package_name": "pl.strefakursow.citycall"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "609485473497-gvmkgl3samb7lum1lrhe2g7332baa95u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmwxpFOwJVgDv-VduTO7uGEstRbnPmaXw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "609485473497-gvmkgl3samb7lum1lrhe2g7332baa95u.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

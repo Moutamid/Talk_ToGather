@@ -19,6 +19,7 @@ import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -84,17 +85,14 @@ public class Users_Activity extends AppCompatActivity {
 
         }
 
-        MobileAds.initialize(getApplicationContext(), getString(R.string.admob_app_id));
+        MobileAds.initialize(getApplicationContext()); // getString(R.string.admob_app_id)
         AdView mAdView = (AdView) findViewById(R.id.adView);
         ImageView placeImage = (ImageView) findViewById(R.id.placeholder);
-        mAdView.setAdListener(new AdListener() {
-            private void showToast(String message) {
-                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-            }
 
+        mAdView.setAdListener(new AdListener() {
             @Override
             public void onAdLoaded() {
-                Log.d("Error", String.valueOf("Ads Load"));
+                super.onAdLoaded();
                 if (mAdView.getVisibility() == View.GONE) {
                     mAdView.setVisibility(View.VISIBLE);
                     placeImage.setVisibility(View.GONE);
@@ -102,26 +100,10 @@ public class Users_Activity extends AppCompatActivity {
             }
 
             @Override
-            public void onAdFailedToLoad(int errorCode) {
-              //  showToast(String.format("Ad failed to load with error code %d.", errorCode));
-                Log.d("Error", String.valueOf(errorCode));
+            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                super.onAdFailedToLoad(loadAdError);
                 mAdView.setVisibility(View.GONE);
                 placeImage.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onAdOpened() {
-                Log.d("Error", String.valueOf("Ads Open"));
-            }
-
-            @Override
-            public void onAdClosed() {
-                Log.d("Error", String.valueOf("Ads Close"));
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                showToast("Ad left application.");
             }
         });
 

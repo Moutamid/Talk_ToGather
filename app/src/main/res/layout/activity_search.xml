@@ -36,7 +36,7 @@
             android:drawableRight="@drawable/ic_baseline_search_24"
             android:padding="8dp"
             android:layout_marginLeft="8dp"
-            android:hint="@string/search_hint"
+            android:hint="Search"
             android:textColor="#000"
             android:textColorHint="#000"
             android:background="@drawable/shapable_recatngle"

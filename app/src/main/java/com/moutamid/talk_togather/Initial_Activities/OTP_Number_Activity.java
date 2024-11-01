@@ -14,6 +14,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.android.gms.ads.AdRequest;
@@ -92,31 +93,38 @@ public class OTP_Number_Activity extends AppCompatActivity {
 
     private void chechPhoneExists() {
         String number = ccp.getFullNumberWithPlus();
-        Query query = FirebaseDatabase.getInstance().getReference().child("Users")
-                .orderByChild("phone").equalTo(number);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
-                    Intent intent = new Intent(OTP_Number_Activity.this , OTP_Verification_Activity.class);
-                    intent.putExtra("phone",number);
-                    intent.putExtra("login",accountType);
-                    startActivity(intent);
-                    Animatoo.animateFade(OTP_Number_Activity.this);
-                }else {
-                    Intent intent = new Intent(OTP_Number_Activity.this , OTP_Verification_Activity.class);
-                    intent.putExtra("phone",number);
-                    intent.putExtra("login",accountType);
-                    startActivity(intent);
-                    Animatoo.animateFade(OTP_Number_Activity.this);
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+        Intent intent = new Intent(OTP_Number_Activity.this , OTP_Verification_Activity.class);
+        intent.putExtra("phone",number);
+        intent.putExtra("login",accountType);
+        startActivity(intent);
+        Animatoo.animateFade(OTP_Number_Activity.this);
 
-            }
-        });
+//        Query query = FirebaseDatabase.getInstance().getReference().child("Users")
+//                .orderByChild("phone").equalTo(number);
+//        query.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (snapshot.exists()){
+//                    Intent intent = new Intent(OTP_Number_Activity.this , OTP_Verification_Activity.class);
+//                    intent.putExtra("phone",number);
+//                    intent.putExtra("login",accountType);
+//                    startActivity(intent);
+//                    Animatoo.animateFade(OTP_Number_Activity.this);
+//                }else {
+//                    Intent intent = new Intent(OTP_Number_Activity.this , OTP_Verification_Activity.class);
+//                    intent.putExtra("phone",number);
+//                    intent.putExtra("login",accountType);
+//                    startActivity(intent);
+//                    Animatoo.animateFade(OTP_Number_Activity.this);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Toast.makeText(OTP_Number_Activity.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
     }
 

@@ -149,7 +149,7 @@ public class OTP_Verification_Activity extends AppCompatActivity {
     }
 
 
-    private void setUpVerificationCallbacks() {
+     private void setUpVerificationCallbacks() {
         mCallback = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
             @Override
@@ -188,8 +188,12 @@ public class OTP_Verification_Activity extends AppCompatActivity {
     }
 
     private void verifyCode(String pinCode) {
-        PhoneAuthCredential credential  =PhoneAuthProvider.getCredential(verificationId,pinCode);
-        signInWithCredential(credential);
+        if (verificationId != null) {
+            PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, pinCode);
+            signInWithCredential(credential);
+        } else {
+            Toast.makeText(this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void signInWithCredential(PhoneAuthCredential phoneAuthCredential) {
@@ -204,19 +208,18 @@ public class OTP_Verification_Activity extends AppCompatActivity {
                     hashMap.put("remember",remember);
                     hashMap.put("status","Offline");
                     userDatabase.child(user.getUid()).updateChildren(hashMap);
+                    Intent intent;
                     if (remember){
-                        Intent intent = new Intent(OTP_Verification_Activity.this,Login_Activity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
+                        intent = new Intent(OTP_Verification_Activity.this, Login_Activity.class);
                     }else {
-                        Intent intent = new Intent(OTP_Verification_Activity.this,SignUp_Activity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
+                        intent = new Intent(OTP_Verification_Activity.this, SignUp_Activity.class);
                     }
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
                     Animatoo.animateFade(OTP_Verification_Activity.this);
                 }
                 else{
-//                    Toast.makeText(OTP_Verification_Activity.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(OTP_Verification_Activity.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();
                 }
             }
         });

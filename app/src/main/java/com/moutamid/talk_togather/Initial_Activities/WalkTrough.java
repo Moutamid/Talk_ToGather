@@ -34,7 +34,6 @@ public class WalkTrough extends AppCompatActivity {
     Button next_btn;
 
     private ViewPager mViewPager;
-    private CoordinatorLayout mCoordLayout;
 
     private Start_1 start1;
     private Start_2 start2;
@@ -64,7 +63,6 @@ public class WalkTrough extends AppCompatActivity {
         }
         getLocale();
         mViewPager = findViewById(R.id.viewPager);
-        mCoordLayout = findViewById(R.id.coordinator);
         setupViewPager(mViewPager);
 
         skip_text = findViewById(R.id.text_skip);
