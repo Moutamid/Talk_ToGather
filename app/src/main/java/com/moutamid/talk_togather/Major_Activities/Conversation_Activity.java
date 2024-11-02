@@ -1,17 +1,9 @@
 package com.moutamid.talk_togather.Major_Activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -20,10 +12,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -60,19 +56,19 @@ import io.agora.rtc.RtcEngine;
 public class Conversation_Activity extends AppCompatActivity implements AGEventHandler {
 
     private TextView leave_room;
-    private TextView nameTxt,categoryTxt,titleTxt;
+    private TextView nameTxt, categoryTxt, titleTxt;
     private CircleImageView profileImg;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
-    private DatabaseReference db,userDB;
+    private DatabaseReference db, userDB;
     private RecyclerView recyclerView;
-    private ImageView micOn,micOff;
+    private ImageView micOn, micOff;
     private String id = "";
     private String creatorId = "";
     private ArrayList<Model_Conversation> conversationArrayList = new ArrayList<>();
     private static final int PERMISSION_REQ_ID_RECORD_AUDIO = 22;
     private final static Logger log = LoggerFactory.getLogger(Chat_Activity.class);
-//    private volatile boolean mAudioMuted = false;
+    //    private volatile boolean mAudioMuted = false;
     private SharedPreferencesManager prefs;
     private boolean micStatus;
     private boolean asked = false;
@@ -85,16 +81,16 @@ public class Conversation_Activity extends AppCompatActivity implements AGEventH
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         prefs = new SharedPreferencesManager(this); //get SharedPreferencesManager  instance
-        theme = prefs.retrieveBoolean("theme",false);//get stored theme, zero is default
+        theme = prefs.retrieveBoolean("theme", false);//get stored theme, zero is default
         setContentView(R.layout.activity_conversation);
         final Animation animation = AnimationUtils.loadAnimation(this, R.anim.bounce);
 
-        if (theme){
+        if (theme) {
             AppCompatDelegate
                     .setDefaultNightMode(
                             AppCompatDelegate
                                     .MODE_NIGHT_YES);
-        }else {
+        } else {
 
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -108,12 +104,14 @@ public class Conversation_Activity extends AppCompatActivity implements AGEventH
         categoryTxt = findViewById(R.id.text_heading);
         titleTxt = findViewById(R.id.text_title);
         profileImg = findViewById(R.id.profile);
-        //micOn = findViewById(R.id.speakerOn);
-        //micOff = findViewById(R.id.speakerOff);
+
+//        micOn = findViewById(R.id.speakerOn);
+//        micOff = findViewById(R.id.speakerOff);
+
         recyclerView = findViewById(R.id.recyclerView_convesation);
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
-        micStatus = prefs.retrieveBoolean("isMicEnable",false);
+        micStatus = prefs.retrieveBoolean("isMicEnable", false);
         id = getIntent().getStringExtra("id");
         creatorId = getIntent().getStringExtra("createdId");
         db = FirebaseDatabase.getInstance().getReference().child("Rooms");
@@ -125,39 +123,42 @@ public class Conversation_Activity extends AppCompatActivity implements AGEventH
                 doLeaveChannel();
             }
         });
-        /*micOn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                micOn.setVisibility(View.GONE);
-                micOff.setVisibility(View.VISIBLE);
-                muteLocal = false;
-                //  rtcEngine().muteLocalAudioStream(true);
-            }
-        });
-        micOff.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                micOn.setVisibility(View.VISIBLE);
-                micOff.setVisibility(View.GONE);
-                muteLocal = true;
-                //  rtcEngine().muteLocalAudioStream(false);
-            }
-        });*/
-        if (checkSelfPermission(Manifest.permission.RECORD_AUDIO,Manifest.permission.WRITE_EXTERNAL_STORAGE, PERMISSION_REQ_ID_RECORD_AUDIO)) {
+
+//        micOn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                micOn.setVisibility(View.GONE);
+//                micOff.setVisibility(View.VISIBLE);
+//                muteLocal = false;
+//                rtcEngine().muteLocalAudioStream(true);
+//            }
+//        });
+//
+//        micOff.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                micOn.setVisibility(View.VISIBLE);
+//                micOff.setVisibility(View.GONE);
+//                muteLocal = true;
+//                rtcEngine().muteLocalAudioStream(false);
+//            }
+//        });
+
+        if (checkSelfPermission(Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE, PERMISSION_REQ_ID_RECORD_AUDIO)) {
             ((AGApplication) getApplication()).initWorkerThread();
             getRoomDetails();
             checkRoomDB();
             getRoomsUsers();
             asked = true;
-           /* if (muteLocal){
-                micOn.setVisibility(View.VISIBLE);
-                micOff.setVisibility(View.GONE);
-            }else {
-                micOn.setVisibility(View.GONE);
-                micOff.setVisibility(View.VISIBLE);
-             //   rtcEngine().muteLocalAudioStream(true);
-            }
-            rtcEngine().muteLocalAudioStream(muteLocal);*/
+//            if (muteLocal){
+//                micOn.setVisibility(View.VISIBLE);
+//                micOff.setVisibility(View.GONE);
+//            }else {
+//                micOn.setVisibility(View.GONE);
+//                micOff.setVisibility(View.VISIBLE);
+//                rtcEngine().muteLocalAudioStream(true);
+//            }
+//            rtcEngine().muteLocalAudioStream(muteLocal);
         }
 
 
@@ -169,7 +170,7 @@ public class Conversation_Activity extends AppCompatActivity implements AGEventH
                 != PackageManager.PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions(this,
-                    new String[]{permission,writeExternalStorage},
+                    new String[]{permission, writeExternalStorage},
                     recordAudio);
             return true;
         }
@@ -183,7 +184,7 @@ public class Conversation_Activity extends AppCompatActivity implements AGEventH
             case PERMISSION_REQ_ID_RECORD_AUDIO: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //    checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,PERMISSION_REQ_ID_RECORD_AUDIO);
+                    //    checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,PERMISSION_REQ_ID_RECORD_AUDIO);
                     ((AGApplication) getApplication()).initWorkerThread();
                     getRoomDetails();
                     checkRoomDB();
@@ -202,30 +203,30 @@ public class Conversation_Activity extends AppCompatActivity implements AGEventH
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()){
+                        if (snapshot.exists()) {
                             conversationArrayList.clear();
-                            for (DataSnapshot ds : snapshot.getChildren()){
+                            for (DataSnapshot ds : snapshot.getChildren()) {
                                 Model_Conversation conversation = ds.getValue(Model_Conversation.class);
                                 if (!conversation.getId().equals(user.getUid())) {
                                     conversationArrayList.add(conversation);
                                 }
                             }
                             adapter_conversation = new Adapter_Conversation(Conversation_Activity.this,
-                                    conversationArrayList,id);
+                                    conversationArrayList, id);
                             recyclerView.setAdapter(adapter_conversation);
-                          /*  adapter_conversation.setItemClickListener(new ItemClickListener() {
+                            adapter_conversation.setItemClickListener(new ItemClickListener() {
                                 @Override
                                 public void onItemClick(int position, View view) {
                                     Model_Conversation model = conversationArrayList.get(position);
-                                    if (model.isMic_status()){
-                                        saveMicStatus(false,model.getId());
-                                        rtcEngine().muteRemoteAudioStream(config().mUid,true);
-                                    }else {
-                                        saveMicStatus(true,model.getId());
-                                        rtcEngine().muteRemoteAudioStream(config().mUid,false);
-                                    }
+//                                    if (model.isMic_status()){
+//                                        // saveMicStatus(false,model.getId());
+//                                        rtcEngine().muteRemoteAudioStream(config().mUid,true);
+//                                    }else {
+//                                        // saveMicStatus(true,model.getId());
+//                                        rtcEngine().muteRemoteAudioStream(config().mUid,false);
+//                                    }
                                 }
-                            });*/
+                            });
                             adapter_conversation.notifyDataSetChanged();
                         }
                     }
@@ -239,21 +240,19 @@ public class Conversation_Activity extends AppCompatActivity implements AGEventH
     }
 
 
-    private void getLocale(){
-
-        String lang = prefs.retrieveString("lang","");
+    private void getLocale() {
+        String lang = prefs.retrieveString("lang", "");
         setLocale(lang);
     }
 
     private void setLocale(String lng) {
-
         Locale locale = new Locale(lng);
         Locale.setDefault(locale);
 
         Configuration configuration = new Configuration();
         configuration.locale = locale;
-        getBaseContext().getResources().updateConfiguration(configuration,getBaseContext().getResources().getDisplayMetrics());
-        prefs.storeString("lang",lng);
+        getBaseContext().getResources().updateConfiguration(configuration, getBaseContext().getResources().getDisplayMetrics());
+        prefs.storeString("lang", lng);
     }
 
 
@@ -264,7 +263,7 @@ public class Conversation_Activity extends AppCompatActivity implements AGEventH
             iv.setSelected(false);
             iv.setImageResource(R.drawable.ic_baseline_mic_none_24);
             iv.setBackgroundResource(R.drawable.shape_circle);
-           // iv.clearColorFilter();
+            // iv.clearColorFilter();
         } else {
             iv.setSelected(true);
             iv.setImageResource(R.drawable.ic_baseline_mic_off_24);
@@ -273,14 +272,13 @@ public class Conversation_Activity extends AppCompatActivity implements AGEventH
         }
 
         // Stops/Resumes sending the local audio stream.
-        rtcEngine().muteLocalAudioStream(iv.isSelected());
+//        rtcEngine().muteLocalAudioStream(iv.isSelected());
     }
 
     private void checkRoomDB() {
-
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("id",user.getUid());
-        hashMap.put("mic_status",micStatus);
+        hashMap.put("id", user.getUid());
+        hashMap.put("mic_status", micStatus);
         db.child(id).child("users").child(user.getUid()).updateChildren(hashMap);
     }
 
@@ -288,21 +286,21 @@ public class Conversation_Activity extends AppCompatActivity implements AGEventH
         db.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
+                if (snapshot.exists()) {
                     RoomDetails model = snapshot.getValue(RoomDetails.class);
                     titleTxt.setText(model.getTitle());
                     categoryTxt.setText(model.getCategory());
                     userDB.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.exists()){
+                            if (snapshot.exists()) {
                                 User model = snapshot.getValue(User.class);
-                                nameTxt.setText(model.getFname()+" " + model.getLname());
-                                if (model.getImageUrl().equals("")){
+                                nameTxt.setText(model.getFname() + " " + model.getLname());
+                                if (model.getImageUrl().equals("")) {
                                     Picasso.with(getApplicationContext())
                                             .load(R.drawable.profile)
                                             .into(profileImg);
-                                }else {
+                                } else {
                                     Picasso.with(getApplicationContext())
                                             .load(model.getImageUrl())
                                             .into(profileImg);
@@ -328,9 +326,9 @@ public class Conversation_Activity extends AppCompatActivity implements AGEventH
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(Conversation_Activity.this , DashBoard.class);
+        Intent intent = new Intent(Conversation_Activity.this, DashBoard.class);
         startActivity(intent);
         Animatoo.animateSlideDown(Conversation_Activity.this);
         finish();
@@ -343,10 +341,10 @@ public class Conversation_Activity extends AppCompatActivity implements AGEventH
     }
 
     private void quitCall() {
-        if (creatorId.equals(user.getUid())){
+        if (creatorId.equals(user.getUid())) {
             db.child(id).removeValue();
         }
-        Intent intent = new Intent(Conversation_Activity.this , DashBoard.class);
+        Intent intent = new Intent(Conversation_Activity.this, DashBoard.class);
         startActivity(intent);
         Animatoo.animateSlideDown(Conversation_Activity.this);
         finish();
@@ -383,8 +381,8 @@ public class Conversation_Activity extends AppCompatActivity implements AGEventH
                     return;
                 }
 
-                rtcEngine().setEnableSpeakerphone(mAudioRouting != 3);
-                rtcEngine().muteLocalAudioStream(false);
+//                rtcEngine().setEnableSpeakerphone(mAudioRouting != 3);
+//                rtcEngine().muteLocalAudioStream(false);
             }
         });
 
@@ -494,6 +492,7 @@ public class Conversation_Activity extends AppCompatActivity implements AGEventH
         Toast.makeText(Conversation_Activity.this, msg, Toast.LENGTH_SHORT).show();
 
     }
+
     public RtcEngine rtcEngine() {
         return ((AGApplication) getApplication()).getWorkerThread().getRtcEngine();
     }
@@ -518,6 +517,7 @@ public class Conversation_Activity extends AppCompatActivity implements AGEventH
             }
         });
     }
+
     public void notifyHeadsetPlugged(final int routing) {
         log.info("notifyHeadsetPlugged " + routing);
 
