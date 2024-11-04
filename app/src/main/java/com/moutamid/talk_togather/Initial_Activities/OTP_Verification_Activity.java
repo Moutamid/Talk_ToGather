@@ -1,9 +1,5 @@
 package com.moutamid.talk_togather.Initial_Activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -18,11 +14,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.chaos.view.PinView;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
@@ -58,22 +55,23 @@ public class OTP_Verification_Activity extends AppCompatActivity {
     private boolean remember;
     private SharedPreferencesManager prefs;
     private boolean theme;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         prefs = new SharedPreferencesManager(this);
-        theme = prefs.retrieveBoolean("theme",false);//get stored theme, zero is default
+        theme = prefs.retrieveBoolean("theme", false);//get stored theme, zero is default
         setContentView(R.layout.activity_otp_verification);
 
         final Animation animation = AnimationUtils.loadAnimation(this, R.anim.bounce);
 
-        if (theme){
+        if (theme) {
             AppCompatDelegate
                     .setDefaultNightMode(
                             AppCompatDelegate
                                     .MODE_NIGHT_YES);
-        }else {
+        } else {
 
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -86,6 +84,12 @@ public class OTP_Verification_Activity extends AppCompatActivity {
         start_btn_otp.setAlpha(0f);
         start_btn_otp.animate().alpha(1f).setDuration(3000);
 
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         phoneTxt = (TextView) findViewById(R.id.phone);
         pin = (PinView) findViewById(R.id.pinview);
@@ -93,7 +97,7 @@ public class OTP_Verification_Activity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         dialog = new ProgressDialog(this);
         phonenumber = getIntent().getStringExtra("phone");
-        remember = getIntent().getBooleanExtra("login",false);
+        remember = getIntent().getBooleanExtra("login", false);
         phoneTxt.setText(phonenumber);
         sendVerificationCode(phonenumber);
         userDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -102,14 +106,15 @@ public class OTP_Verification_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent  = new Intent(OTP_Verification_Activity.this,OTP_Number_Activity.class);
+                Intent intent = new Intent(OTP_Verification_Activity.this, OTP_Number_Activity.class);
                 startActivity(intent);
             }
         });
-        resendCodeTxt = (TextView)findViewById(R.id.resend_otp);
+        resendCodeTxt = (TextView) findViewById(R.id.resend_otp);
         resendCodeTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog.show();
                 codeResend(phonenumber);
             }
         });
@@ -120,20 +125,21 @@ public class OTP_Verification_Activity extends AppCompatActivity {
                 start_btn_otp.startAnimation(animation);
                 String pinCode = pin.getText().toString();
                 //  showProgressDialog(pinCode);
-                if (TextUtils.isEmpty(pinCode)){
-                    Toast.makeText(OTP_Verification_Activity.this,"Please Enter the code",Toast.LENGTH_LONG).show();
-                }else {
+                if (TextUtils.isEmpty(pinCode)) {
+                    Toast.makeText(OTP_Verification_Activity.this, "Please Enter the code", Toast.LENGTH_LONG).show();
+                } else {
                     verifyCode(pinCode);
                 }
 
             }
         });
+
     }
 
 
-    private void getLocale(){
+    private void getLocale() {
 
-        String lang = prefs.retrieveString("lang","");
+        String lang = prefs.retrieveString("lang", "");
         setLocale(lang);
     }
 
@@ -144,12 +150,12 @@ public class OTP_Verification_Activity extends AppCompatActivity {
 
         Configuration configuration = new Configuration();
         configuration.locale = locale;
-        getBaseContext().getResources().updateConfiguration(configuration,getBaseContext().getResources().getDisplayMetrics());
-        prefs.storeString("lang",lng);
+        getBaseContext().getResources().updateConfiguration(configuration, getBaseContext().getResources().getDisplayMetrics());
+        prefs.storeString("lang", lng);
     }
 
 
-     private void setUpVerificationCallbacks() {
+    private void setUpVerificationCallbacks() {
         mCallback = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
             @Override
@@ -157,12 +163,13 @@ public class OTP_Verification_Activity extends AppCompatActivity {
                 super.onCodeSent(s, forceResendingToken);
                 verificationId = s;
                 resendToken = forceResendingToken;
+                progressDialog.dismiss();
             }
 
             @Override
             public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
                 String code = phoneAuthCredential.getSmsCode();
-                if (code != null){
+                if (code != null) {
                     pin.setText(code);
                     verifyCode(code);
                 }
@@ -171,17 +178,18 @@ public class OTP_Verification_Activity extends AppCompatActivity {
 
             @Override
             public void onVerificationFailed(@NonNull FirebaseException e) {
-                //Toast.makeText(OTP_Verification_Activity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(OTP_Verification_Activity.this, e.getMessage(), Toast.LENGTH_LONG).show();
             }
         };
     }
+
     private void sendVerificationCode(String phonenumber) {
         //  showProgressDialog(pinCode);
         setUpVerificationCallbacks();
 
         PhoneAuthOptions options = PhoneAuthOptions.newBuilder(auth)
                 .setPhoneNumber(phonenumber)
-                .setTimeout(60L,TimeUnit.SECONDS)
+                .setTimeout(60L, TimeUnit.SECONDS)
                 .setActivity(this).setCallbacks(mCallback).build();
 
         PhoneAuthProvider.verifyPhoneNumber(options);
@@ -200,30 +208,30 @@ public class OTP_Verification_Activity extends AppCompatActivity {
         auth.signInWithCredential(phoneAuthCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
                     FirebaseUser user = auth.getCurrentUser();
                     HashMap<String, Object> hashMap = new HashMap<>();
-                    hashMap.put("id",user.getUid());
-                    hashMap.put("phone",phonenumber);
-                    hashMap.put("remember",remember);
-                    hashMap.put("status","Offline");
+                    hashMap.put("id", user.getUid());
+                    hashMap.put("phone", phonenumber);
+                    hashMap.put("remember", remember);
+                    hashMap.put("status", "Offline");
                     userDatabase.child(user.getUid()).updateChildren(hashMap);
                     Intent intent;
-                    if (remember){
+                    if (remember) {
                         intent = new Intent(OTP_Verification_Activity.this, Login_Activity.class);
-                    }else {
+                    } else {
                         intent = new Intent(OTP_Verification_Activity.this, SignUp_Activity.class);
                     }
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     Animatoo.animateFade(OTP_Verification_Activity.this);
-                }
-                else{
-                    Toast.makeText(OTP_Verification_Activity.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(OTP_Verification_Activity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         });
     }
+
     private void codeResend(String phonenumber) {
 
         setUpVerificationCallbacks();
